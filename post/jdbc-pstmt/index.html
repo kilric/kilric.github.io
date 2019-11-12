@@ -1,0 +1,671 @@
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+  <script src="https://kilric.github.io/media/prism.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+  <div class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="flex justify-between items-center mt-10">
+  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
+    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
+  </h1>
+  <div class="block lg:hidden" id="thumb-menu">
+    <button id="thumb-open" type="button" class="block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
+    </button>
+    <button id="thumb-close" type="button" class="hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
+    </button>
+  </div>
+</div>
+<div id="nav-list" class="lg:block hidden">
+  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
+    <div class="lg:flex -mb-px">
+      
+        
+          <a href="/" class="nav-link">首页</a>
+        
+      
+        
+          <a href="/archives" class="nav-link">归档</a>
+        
+      
+        
+          <a href="/tags" class="nav-link">标签</a>
+        
+      
+        
+          <a href="/post/about" class="nav-link">关于</a>
+        
+      
+    </div>
+    <div class="lg:flex">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
+        <div>RSS</div>
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
+        <div class="w-full md:w-2/3 mt-6">
+          <h1 class="text-4xl">JDBC-PreparedStatement的使用</h1>
+          
+          <div class="mt-6 lg:mt-10 post-content">
+            <h1 id="1-使用preparedstatement实现crud操作基础知识">1. 使用PreparedStatement实现CRUD操作基础知识</h1>
+<h2 id="11-操作和访问数据库">1.1. 操作和访问数据库</h2>
+<ul>
+<li>
+<p>数据库连接被用于向数据库服务器发送命令和 SQL 语句，并接受数据库服务器返回的结果。其实一个数据库连接就是一个Socket连接。</p>
+</li>
+<li>
+<p>在 java.sql 包中有 3 个接口分别定义了对数据库的调用的不同方式：</p>
+<ul>
+<li>Statement：用于执行静态 SQL 语句并返回它所生成结果的对象。</li>
+<li>PrepatedStatement：SQL 语句被预编译并存储在此对象中，可以使用此对象多次高效地执行该语句。</li>
+<li>CallableStatement：用于执行 SQL 存储过程。<br>
+<img src="https://kilric.github.io/post-images/1573561487076.png" alt=""></li>
+</ul>
+</li>
+</ul>
+<h2 id="12-preparedstatement概念">1.2. PreparedStatement概念</h2>
+<ul>
+<li>
+<p>可以通过调用 Connection 对象的 preparedStatement(String sql) 方法获取 PreparedStatement 对象</p>
+</li>
+<li>
+<p>PreparedStatement 接口是 Statement 的子接口，它表示一条预编译过的 SQL 语句</p>
+</li>
+<li>
+<p>PreparedStatement 对象所代表的 SQL 语句中的参数用问号(?)来表示，调用 PreparedStatement 对象的 setXxx() 方法来设置这些参数. setXxx() 方法有两个参数，第一个参数是要设置的 SQL 语句中的参数的索引(从 1 开始)，第二个是设置的 SQL 语句中的参数的值</p>
+</li>
+</ul>
+<h2 id="13-java和sql数据类型">1.3. Java和SQL数据类型</h2>
+<figure data-type="image" tabindex="1"><img src="https://kilric.github.io/post-images/1573561528477.png" alt=""></figure>
+<h2 id="14-resultset与resultsetmetadata">1.4. ResultSet与ResultSetMetaData</h2>
+<h3 id="141-resultset">1.4.1. ResultSet</h3>
+<ul>
+<li>
+<p>查询需要调用PreparedStatement 的 executeQuery() 方法，查询结果是一个ResultSet 对象</p>
+</li>
+<li>
+<p>ResultSet 对象以逻辑表格的形式封装了执行数据库操作的结果集，ResultSet 接口由数据库厂商提供实现</p>
+</li>
+<li>
+<p>ResultSet 返回的实际上就是一张数据表。有一个指针指向数据表的第一条记录的前面。</p>
+</li>
+<li>
+<p>ResultSet 对象维护了一个指向当前数据行的游标，初始的时候，游标在第一行之前，可以通过 ResultSet 对象的 next() 方法移动到下一行。调用 next()方法检测下一行是否有效。若有效，该方法返回 true，且指针下移。相当于Iterator对象的 hasNext() 和 next() 方法的结合体。</p>
+</li>
+<li>
+<p>当指针指向一行时, 可以通过调用 getXxx(int index) 或 getXxx(int columnName) 获取每一列的值。</p>
+</li>
+</ul>
+<p>例如: getInt(1), getString(&quot;name&quot;)<br>
+<strong>Java与数据库交互涉及到的相关Java API中的索引都从1开始。</strong></p>
+<ul>
+<li>ResultSet 接口的常用方法：
+<ul>
+<li>boolean next()</li>
+<li>getString()</li>
+<li>getObject()</li>
+</ul>
+</li>
+</ul>
+<h3 id="142-resultsetmetadata">1.4.2. ResultSetMetaData</h3>
+<ul>
+<li>
+<p>可用于获取关于 ResultSet 对象中列的类型和属性信息的对象</p>
+<ul>
+<li>ResultSetMetaData meta = rs.getMetaData();</li>
+<li>getColumnName(int column)：获取指定列的名称</li>
+<li>getColumnLabel(int column)：获取指定列的别名</li>
+<li>getColumnCount()：返回当前 ResultSet 对象中的列数。</li>
+<li>getColumnTypeName(int column)：检索指定列的数据库特定的类型名称。</li>
+<li>getColumnDisplaySize(int column)：指示指定列的最大标准宽度，以字符为单位。</li>
+<li>isNullable(int column)：指示指定列中的值是否可以为 null。</li>
+<li>isAutoIncrement(int column)：指示是否自动为指定列进行编号，这样这些列仍然是只读的。</li>
+</ul>
+</li>
+<li>
+<p>得到结果集后需要使用一个描述 ResultSet 的对象， 即 ResultSetMetaData.</p>
+<ul>
+<li>调用 ResultSet 的 getMetaData() 方法获取 ResultSetMetaData</li>
+<li>调用 ResultSetMetaData 的 getColumnCount() 方法获取 ResultSet 中有多少列</li>
+<li>调用 ResultSetMetaData 的getColumnLabel() 方法获取 ResultSet 每一列的列的别名是什么</li>
+</ul>
+</li>
+</ul>
+<h3 id="143-资源的释放">1.4.3. 资源的释放</h3>
+<ul>
+<li>
+<p>释放ResultSet, Statement,Connection。</p>
+</li>
+<li>
+<p>数据库连接（Connection）是非常稀有的资源，用完后必须马上释放，如果Connection不能及时正确的关闭将导致系统宕机。Connection的使用原则是尽量晚创建，尽量早的释放。</p>
+</li>
+<li>
+<p>可以在finally中关闭，保证及时其他代码出现异常，资源也一定能被关闭。<br>
+<strong>代码示例：</strong></p>
+</li>
+<li>
+<p>通用增删改操作</p>
+</li>
+</ul>
+<pre><code class="language-java">public void update(String sql,Object... args){
+		Connection conn = JDBCUtils.getConnection (&quot;jdbc.properties&quot;);
+		PreparedStatement statement = null;
+		try {
+			 statement = conn.prepareStatement (sql);
+			 for (int i = 0;i &lt; args.length;i++){
+			 	statement.setObject (i+1,args[i]);
+			 }
+			 statement.execute ();
+		} catch (SQLException e) {
+			e.printStackTrace ();
+		}finally {
+			JDBCUtils.closeResource (conn,statement);
+		}
+
+}
+</code></pre>
+<ul>
+<li>通用查询操作</li>
+</ul>
+<pre><code class="language-java">public static List&lt;ClassInfo&gt; query(String sql, Object... args) throws SQLException, NoSuchFieldException, IllegalAccessException {
+		//连接数据库
+		Connection conn = JDBCUtils.getConnection (&quot;jdbc.properties&quot;);
+
+		PreparedStatement preparedStatement = conn.prepareStatement (sql);
+		for (int i = 0;i &lt; args.length;i++){
+			preparedStatement.setObject (i + 1,args[i]);
+		}
+
+		ResultSet resultSet = preparedStatement.executeQuery();
+		//结果集的元数据
+		ResultSetMetaData metaData = resultSet.getMetaData ();
+		int columnCount = metaData.getColumnCount ();
+
+		List resList = new ArrayList ();
+
+		while(resultSet.next ()){
+			ClassInfo temp = new ClassInfo ();
+			for (int i = 0;i &lt; columnCount;i++){
+				//获取列值
+				Object value = resultSet.getObject (i + 1);
+				//获取列名
+				String columnName = metaData.getColumnName (i + 1);
+				//利用反射设置值
+				Field valueField = ClassInfo.class.getDeclaredField (columnName);
+				valueField.setAccessible (true);
+				valueField.set (temp,value);
+				//添加到返回集合中
+				resList.add (temp);
+			}
+		}
+		return resList;
+}
+</code></pre>
+<h1 id="2-操作blob字段">2. 操作BLOB字段</h1>
+<h2 id="21-mysql-blob类型">2.1. MySQL BLOB类型</h2>
+<ul>
+<li>
+<p>MySQL中，BLOB是一个二进制大型对象，是一个可以存储大量数据的容器，它能容纳不同大小的数据。</p>
+</li>
+<li>
+<p>插入BLOB类型的数据必须使用PreparedStatement，因为BLOB类型的数据无法使用字符串拼接写的。</p>
+</li>
+<li>
+<p>MySQL的四种BLOB类型(除了在存储的最大信息量上不同外，他们是等同的)<br>
+<img src="https://kilric.github.io/post-images/1573561587279.png" alt=""><br>
+实际使用中根据需要存入的数据大小定义不同的BLOB类型。<br>
+需要注意的是：如果存储的文件过大，数据库的性能会下降。<br>
+如果在指定了相关的Blob类型以后，报错：xxx too large，那么在mysql的安装目录下，找my.ini文件加上如下的配置参数： max_allowed_packet=16M。同时注意：修改了my.ini文件之后，需要重新启动mysql服务。</p>
+</li>
+</ul>
+<h2 id="22-插入blob字段">2.2. 插入Blob字段</h2>
+<pre><code class="language-java">public static int insertBlob() throws IOException, ClassNotFoundException, SQLException {
+		InputStream inputStream = ClassLoader.getSystemResourceAsStream (&quot;jdbc.properties&quot;);
+
+		Properties properties = new Properties ();
+		assert inputStream != null;
+		properties.load (inputStream);
+
+		String url = properties.getProperty (&quot;url&quot;);
+		Class.forName (&quot;com.mysql.jdbc.Driver&quot;);
+		Connection conn = DriverManager.getConnection (url,properties);
+
+		String sql = &quot;insert into testBlob(name,email,age,photo) values(?,?,?,?)&quot;;
+		PreparedStatement statement = conn.prepareStatement (sql);
+
+		statement.setObject (1,&quot;孙悟空&quot;);
+		statement.setObject (2,&quot;sunwukong@qq.com&quot;);
+		statement.setObject (3,1500);
+
+		FileInputStream in = new FileInputStream (&quot;G:\\Java_WorkSpace\\JDBC\\TestPreparedStatement\\src\\sunwukong.jpg&quot;);
+		statement.setBlob (4,in);
+
+		return statement.executeUpdate ();
+}
+</code></pre>
+<h2 id="23-修改更新blob字段">2.3. 修改/更新Blob字段</h2>
+<pre><code class="language-java">public static int updateBlob() throws Exception {
+		InputStream in = ClassLoader.getSystemResourceAsStream (&quot;jdbc.properties&quot;);
+
+		Properties properties = new Properties ();
+		properties.load (in);
+
+		String url = properties.getProperty (&quot;url&quot;);
+		Class.forName (&quot;com.mysql.jdbc.Driver&quot;);
+		Connection conn = DriverManager.getConnection (url,properties);
+		String sql = &quot;update testblob set photo = ? where name = ? &quot;;
+		PreparedStatement statement = conn.prepareStatement (sql);
+		InputStream inputStream = new FileInputStream(&quot;G:\\Java_WorkSpace\\JDBC\\TestPreparedStatement\\beijing123.jpg&quot;);
+		statement.setBlob (1,inputStream);
+		statement.setObject (2,&quot;金克丝&quot;);
+
+		return statement.executeUpdate ();
+	}
+2.4. 读取Blob字段
+public static void readBlob() throws Exception {
+		Connection conn = JDBCUtils.getConnection (&quot;jdbc.properties&quot;);
+		String sql = &quot;select id,name,email,age,photo from testblob where email = ?&quot;;
+		assert conn != null;
+		PreparedStatement statement = conn.prepareStatement (sql);
+		statement.setObject (1,&quot;787645957@qq.com&quot;);
+
+		ResultSet resultSet = statement.executeQuery ();
+
+		if (resultSet.next ()){
+
+			int id = resultSet.getInt (&quot;id&quot;);
+			String name = resultSet.getString (&quot;name&quot;);
+			String email = resultSet.getString (&quot;email&quot;);
+			int age = resultSet.getInt (&quot;age&quot;);
+			Student student = new Student (id,name,email,age);
+			Blob photo = resultSet.getBlob (&quot;photo&quot;);
+
+			InputStream inputStream = photo.getBinaryStream ();
+			//保存为liyao.jpg
+			OutputStream outputStream = new FileOutputStream (&quot;liyao.jpg&quot;);
+
+			byte[] buf = inputStream.readAllBytes ();
+			outputStream.write (buf,0,buf.length);
+
+			System.out.println (student);
+		}
+}
+</code></pre>
+<h1 id="3-批量插入批量执行sql语句">3. 批量插入/批量执行SQL语句</h1>
+<h2 id="31-批量执行sql语句">3.1. 批量执行SQL语句</h2>
+<ul>
+<li>
+<p>当需要成批插入或者更新记录时，可以采用Java的批量更新机制，这一机制允许多条语句一次性提交给数据库批量处理。通常情况下比单独提交处理更有效率。</p>
+</li>
+<li>
+<p>mysql服务器默认是关闭批处理的，我们需要通过一个参数，让mysql开启批处理的支持。</p>
+</li>
+<li>
+<p>把**?rewriteBatchedStatements=true写在配置文件的url后面或者&amp;rewriteBatchedStatements=true**写在其他参数后面。</p>
+</li>
+<li>
+<p>JDBC的批量处理语句包括下面三个方法：</p>
+<ul>
+<li>addBatch(String)：添加需要批量处理的SQL语句或是参数；</li>
+<li>executeBatch()：执行批量处理语句；</li>
+<li>clearBatch():清空缓存的数据</li>
+</ul>
+</li>
+<li>
+<p>通常我们会遇到两种批量执行SQL语句的情况：</p>
+<ul>
+<li>多条SQL语句的批量处理；</li>
+<li>一个SQL语句的批量传参；</li>
+</ul>
+</li>
+</ul>
+<h2 id="32-批量插入">3.2. 批量插入</h2>
+<pre><code class="language-java">public static void piInsert() throws SQLException {
+		long start = System.currentTimeMillis ();
+		//JDBCUtils是一个工具类，封装了数据库连接，返回一个连接
+		Connection conn = JDBCUtils.getConnection (&quot;jdbc.properties&quot;);
+		conn.setAutoCommit (false);
+
+		String sql = &quot;insert into pichuli(name) values(?)&quot;;
+		PreparedStatement statement = conn.prepareStatement (sql);
+
+		for (int i = 0;i &lt; 20000;i++){
+			statement.setObject (1,&quot;student&quot; + (i+1));
+			//积攒sql语句
+			statement.addBatch ();
+			if (i % 500 == 0){
+				//执行
+				statement.executeBatch ();
+				//清空
+				statement.clearBatch ();
+			}
+			//执行最后一条
+			if (i == 19999){
+				statement.executeBatch ();
+				statement.clearBatch ();
+			}
+
+		}
+		//提交数据
+		conn.commit ();
+		//设置为默认的自动提交
+		conn.setAutoCommit (true);
+		long end = System.currentTimeMillis ();
+		System.out.println (&quot;执行时间: &quot; + (end - start) / 1000);
+}
+</code></pre>
+<h1 id="4-数据库事务">4. 数据库事务</h1>
+<h2 id="41-注意事项和操作">4.1. 注意事项和操作</h2>
+<ul>
+<li>数据一旦提交，就不可回滚。</li>
+<li>数据什么时候意味着提交？</li>
+<li>当一个连接对象被创建时，默认情况下是自动提交事务：每次执行一个 SQL 语句时，如果执行成功，就会向数据库自动提交，而不能回滚。</li>
+<li>**关闭数据库连接，数据就会自动的提交。**如果多个操作，每个操作使用的是自己单独的连接，则无法保证事务。即同一个事务的多个操作必须在同一个连接下。</li>
+<li>JDBC程序中为了让多个 SQL 语句作为一个事务执行：
+<ul>
+<li>调用 Connection 对象的 setAutoCommit(false); 以取消自动提交事务</li>
+<li>在所有的 SQL 语句都成功执行后，调用 commit(); 方法提交事务</li>
+<li>在出现异常时，调用 rollback(); 方法回滚事务</li>
+<li>若此时 Connection 没有被关闭，还可能被重复使用，则需要恢复其自动提交状态 setAutoCommit(true)。尤其是在使用数据库连接池技术时，执行close()方法前，恢复自动提交状态。</li>
+</ul>
+</li>
+</ul>
+<p>举例：</p>
+<pre><code class="language-java">	public static void updateBalance()  {
+		Connection conn = null;
+		try {
+			conn = JDBCUtils.getConnection (&quot;jdbc.properties&quot;);
+			conn.setAutoCommit (false);
+			String sql1 = &quot;update `pichuli` set balance = balance - 100 where `name` = 'lux' &quot;;
+			String sql2 = &quot;update `pichuli` set balance = balance + 100 where `name` = 'jinx' &quot;;
+
+			PreparedStatement statement1 = conn.prepareStatement (sql1);
+			PreparedStatement statement2 = conn.prepareStatement (sql2);
+
+			try {
+				statement1.executeUpdate ();
+				statement2.executeUpdate ();
+			} catch (SQLException e) {
+				conn.rollback ();
+				e.printStackTrace ();
+			}
+			try {
+				conn.commit ();
+				System.out.println (&quot;修改余额成功！&quot;);
+			} catch (SQLException e) {
+				conn.rollback ();
+
+				e.printStackTrace ();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace ();
+		} finally {
+			try {
+				conn.setAutoCommit (true);
+			} catch (SQLException e) {
+				e.printStackTrace ();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace ();
+			}
+		}
+	}
+</code></pre>
+<h2 id="42-事务的acid属性">4.2. 事务的ACID属性</h2>
+<ul>
+<li>
+<p>原子性（Atomicity）<br>
+原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。</p>
+</li>
+<li>
+<p>一致性（Consistency）<br>
+事务必须使数据库从一个一致性状态变换到另外一个一致性状态。</p>
+</li>
+<li>
+<p>隔离性（Isolation）<br>
+事务的隔离性是指一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。</p>
+</li>
+<li>
+<p>持久性（Durability）<br>
+持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来的其他操作和数据库故障不应该对其有任何影响。</p>
+</li>
+</ul>
+
+          </div>
+          
+        </div>
+        
+          <div class="w-full md:w-1/3">
+            <div class="mt-6 md:pl-8">
+              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
+              <div class="text-lg mb-6">2019-11-12</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
+              <div class="mb-6">
+                
+                  <a href="https://kilric.github.io/tag/jdbc" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">jdbc</a>
+                
+                  <a href="https://kilric.github.io/tag/java" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">java</a>
+                
+              </div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
+              <div class="text-lg mb-6">12 min read</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
+              <div class="border-b border-gray-400">
+                
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-dao" class="text-lg hover:underline my-2 inline-block">JDBC-Dao模块化思想</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
+</div>
+    </div>
+  </div>
+  <script>
+    Prism.highlightAll()
+  </script>
+</body>
+</html>

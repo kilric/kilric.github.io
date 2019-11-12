@@ -1,0 +1,542 @@
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+  <script src="https://kilric.github.io/media/prism.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+  <div class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="flex justify-between items-center mt-10">
+  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
+    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
+  </h1>
+  <div class="block lg:hidden" id="thumb-menu">
+    <button id="thumb-open" type="button" class="block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
+    </button>
+    <button id="thumb-close" type="button" class="hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
+    </button>
+  </div>
+</div>
+<div id="nav-list" class="lg:block hidden">
+  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
+    <div class="lg:flex -mb-px">
+      
+        
+          <a href="/" class="nav-link">首页</a>
+        
+      
+        
+          <a href="/archives" class="nav-link">归档</a>
+        
+      
+        
+          <a href="/tags" class="nav-link">标签</a>
+        
+      
+        
+          <a href="/post/about" class="nav-link">关于</a>
+        
+      
+    </div>
+    <div class="lg:flex">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
+        <div>RSS</div>
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
+        <div class="w-full md:w-2/3 mt-6">
+          <h1 class="text-4xl">Java-NIO缓冲区</h1>
+          
+          <div class="mt-6 lg:mt-10 post-content">
+            <pre><code>                               NIO缓冲区(Buffer)
+</code></pre>
+<h1 id="1-缓冲区buffer">1. 缓冲区(Buffer)</h1>
+<blockquote>
+<p>缓冲区(Buffer)就是在内存中预留指定大小的存储空间用来对输入/输出(I/O)的数据作临时存储，这部分预留的内存空间就叫做缓冲区：</p>
+</blockquote>
+<ul>
+<li>
+<p>使用缓冲区有两个好处：</p>
+<ul>
+<li>
+<p>减少实际的物理读写次数</p>
+</li>
+<li>
+<p>缓冲区在创建时就被分配内存，这块内存区域一直被重用，可以减少动态分配和回收内存的次数</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>一般在实际过程中，我们一般是先将文件读入内存，再从内存写出到别的地方,这样在输入输出过程中我们都可以用缓存来提升IO性能。</p>
+<p>所以，buffer在IO中很重要。在旧I/O类库中（相对java.nio包）中的BufferedInputStream、BufferedOutputStream、BufferedReader和BufferedWriter在其实现中都运用了缓冲区。java.nio包公开了Buffer API，使得Java程序可以直接控制和运用缓冲区。</p>
+<p>在Java NIO中，<strong>缓冲区的作用也是用来临时存储数据</strong>，可以理解为是I/O操作中数据的中转站。缓冲区直接为通道(Channel)服务，写入数据到通道或从通道读取数据，这样的操利用缓冲区数据来传递就可以达到对数据高效处理的目的。在NIO中主要有八种缓冲区类(其中MappedByteBuffer是专门用于内存映射的一种ByteBuffer).</p>
+<figure data-type="image" tabindex="1"><img src="https://kilric.github.io/post-images/1573558507010.png" alt=""></figure>
+<h2 id="11-字段">1.1. 字段</h2>
+<p>所有缓冲区都有4个属性：capacity、limit、position、mark，并遵循：mark &lt;= position &lt;= limit &lt;= capacity，下表格是对着4个属性的解释：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Capacity</td>
+<td style="text-align:center">容量，即可以容纳的最大数据量；在缓冲区创建时被设定并且不能改变</td>
+</tr>
+<tr>
+<td style="text-align:center">Limit</td>
+<td style="text-align:center">表示缓冲区的当前终点，不能对缓冲区超过极限的位置进行读写操作。且极限是可以修改的</td>
+</tr>
+<tr>
+<td style="text-align:center">Position</td>
+<td style="text-align:center">位置，下一个要被读或写的元素的索引，每次读写缓冲区数据时都会改变改值，为下次读写作准备</td>
+</tr>
+<tr>
+<td style="text-align:center">Mark</td>
+<td style="text-align:center">标记，调用mark()来设置mark=position，再调用reset()可以让position恢复到标记的位置</td>
+</tr>
+</tbody>
+</table>
+<h2 id="12-方法">1.2. 方法</h2>
+<p><strong>1、实例化</strong></p>
+<p>java.nio.Buffer类是一个抽象类，不能被实例化。Buffer类的直接子类，如ByteBuffer等也是抽象类，所以也不能被实例化。</p>
+<p><strong>ByteBuffer类提供了4个静态工厂方法来获得ByteBuffer的实例：</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>allocate(int capacity)</strong></td>
+<td style="text-align:center">从堆空间中分配一个容量大小为capacity的byte数组作为缓冲区的byte数据存储器</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>allocateDirect(int capacity)</strong></td>
+<td style="text-align:center">是不使用JVM堆栈而是通过操作系统来创建内存块用作缓冲区，它与当前操作系统能够更好的耦合，因此能进一步提高I/O操作速度。但是分配直接缓冲区的系统开销很大，因此只有在缓冲区较大并长期存在，或者需要经常重用时，才使用这种缓冲区</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>wrap(byte[] array)</strong></td>
+<td style="text-align:center">这个缓冲区的数据会存放在byte数组中，bytes数组或buff缓冲区任何一方中数据的改动都会影响另一方。其实ByteBuffer底层本来就有一个bytes数组负责来保存buffer缓冲区中的数据，通过allocate方法系统会帮你构造一个byte数组</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>wrap(byte[] array,int offset, int length)</strong></td>
+<td style="text-align:center">在上一个方法的基础上可以指定偏移量和长度，这个offset也就是包装后byteBuffer的position，而length呢就是limit-position的大小，从而我们可以得到limit的位置为length+position(offset)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>测试代码</p>
+</blockquote>
+<pre><code class="language-java">public static void main(String args[]) throws FileNotFoundException {  
+  
+    System.out.println(&quot;----------Test allocate--------&quot;);  
+    System.out.println(&quot;before alocate:&quot;  
+            + Runtime.getRuntime().freeMemory());  
+      
+    // 如果分配的内存过小，调用Runtime.getRuntime().freeMemory()大小不会变化？  
+    // 要超过多少内存大小JVM才能感觉到？  
+    ByteBuffer buffer = ByteBuffer.allocate(102400);  
+    System.out.println(&quot;buffer = &quot; + buffer);  
+      
+    System.out.println(&quot;after alocate:&quot;  
+            + Runtime.getRuntime().freeMemory());  
+      
+    // 这部分直接用的系统内存，所以对JVM的内存没有影响  
+    ByteBuffer directBuffer = ByteBuffer.allocateDirect(102400);  
+    System.out.println(&quot;directBuffer = &quot; + directBuffer);  
+    System.out.println(&quot;after direct alocate:&quot;  
+            + Runtime.getRuntime().freeMemory());  
+      
+    System.out.println(&quot;----------Test wrap--------&quot;);  
+    byte[] bytes = new byte[32];  
+    buffer = ByteBuffer.wrap(bytes);  
+    System.out.println(buffer);  
+      
+    buffer = ByteBuffer.wrap(bytes, 10, 10);  
+    System.out.println(buffer);   
+}
+</code></pre>
+<p>2、其他常用方法</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">limit(), limit(10)等</td>
+<td style="text-align:center">其中读取和设置这4个属性的方法的命名和jQuery中的val(),val(10)类似，一个负责get，一个负责set</td>
+</tr>
+<tr>
+<td style="text-align:center">reset()</td>
+<td style="text-align:center">把position设置成mark的值，相当于之前做过一个标记，现在要退回到之前标记的地方</td>
+</tr>
+<tr>
+<td style="text-align:center">clear()</td>
+<td style="text-align:center">position = 0;limit = capacity;mark = -1;           有点初始化的味道，但是并不影响底层byte数组的内容</td>
+</tr>
+<tr>
+<td style="text-align:center">flip()</td>
+<td style="text-align:center">limit = position;position = 0;mark = -1;   翻转，也就是让flip之后的position到limit这块区域变成之前的0到position这块，翻转就是将一个处于存数据状态的缓冲区变为一个处于准备取数据的状态</td>
+</tr>
+<tr>
+<td style="text-align:center">rewind()</td>
+<td style="text-align:center">把position设为0，mark设为-1，不改变limit的值</td>
+</tr>
+<tr>
+<td style="text-align:center">remaining()</td>
+<td style="text-align:center">return limit - position;返回limit和position之间相对位置差</td>
+</tr>
+<tr>
+<td style="text-align:center">hasRemaining()</td>
+<td style="text-align:center">return position &lt; limit返回是否还有未读内容</td>
+</tr>
+<tr>
+<td style="text-align:center">compact()</td>
+<td style="text-align:center">把从position到limit中的内容移到0到limit-position的区域内，position和limit的取值也分别变成limit-position、capacity。如果先将positon设置到limit，再compact，那么相当于clear()</td>
+</tr>
+<tr>
+<td style="text-align:center">get()</td>
+<td style="text-align:center">相对读，从position位置读取一个byte，并将position+1，为下次读写作准备</td>
+</tr>
+<tr>
+<td style="text-align:center">get(int index)</td>
+<td style="text-align:center">绝对读，读取byteBuffer底层的bytes中下标为index的byte，不改变position</td>
+</tr>
+<tr>
+<td style="text-align:center">get(byte[] dst, int offset, int length)</td>
+<td style="text-align:center">从position位置开始相对读，读length个byte，并写入dst下标从offset到offset+length的区域</td>
+</tr>
+<tr>
+<td style="text-align:center">put(byte b)</td>
+<td style="text-align:center">相对写，向position的位置写入一个byte，并将postion+1，为下次读写作准备</td>
+</tr>
+<tr>
+<td style="text-align:center">put(int index, byte b)</td>
+<td style="text-align:center">绝对写，向byteBuffer底层的bytes中下标为index的位置插入byte b，不改变position</td>
+</tr>
+<tr>
+<td style="text-align:center">put(ByteBuffer src)</td>
+<td style="text-align:center">用相对写，把src中可读的部分（也就是position到limit）写入此byteBuffer</td>
+</tr>
+<tr>
+<td style="text-align:center">put(byte[] src, int offset, int length)</td>
+<td style="text-align:center">从src数组中的offset到offset+length区域读取数据并使用相对写写入此byteBuffer</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>测试代码</p>
+</blockquote>
+<pre><code class="language-java">public static void main(String args[]){  
+  
+    System.out.println(&quot;--------Test reset----------&quot;);  
+    buffer.clear();  
+    buffer.position(5);  
+    buffer.mark();  
+    buffer.position(10);  
+    System.out.println(&quot;before reset:&quot; + buffer);  
+    buffer.reset();  
+    System.out.println(&quot;after reset:&quot; + buffer);  
+  
+    System.out.println(&quot;--------Test rewind--------&quot;);  
+    buffer.clear();  
+    buffer.position(10);  
+    buffer.limit(15);  
+    System.out.println(&quot;before rewind:&quot; + buffer);  
+    buffer.rewind();  
+    System.out.println(&quot;before rewind:&quot; + buffer);  
+  
+    System.out.println(&quot;--------Test compact--------&quot;);  
+    buffer.clear();  
+    buffer.put(&quot;abcd&quot;.getBytes());  
+    System.out.println(&quot;before compact:&quot; + buffer);  
+    System.out.println(new String(buffer.array()));  
+    buffer.flip();  
+    System.out.println(&quot;after flip:&quot; + buffer);  
+    System.out.println((char) buffer.get());  
+    System.out.println((char) buffer.get());  
+    System.out.println((char) buffer.get());  
+    System.out.println(&quot;after three gets:&quot; + buffer);  
+    System.out.println(&quot;\t&quot; + new String(buffer.array()));  
+    buffer.compact();  
+    System.out.println(&quot;after compact:&quot; + buffer);  
+    System.out.println(&quot;\t&quot; + new String(buffer.array()));  
+  
+    System.out.println(&quot;------Test get-------------&quot;);  
+    buffer = ByteBuffer.allocate(32);  
+    buffer.put((byte) 'a').put((byte) 'b').put((byte) 'c').put((byte) 'd')  
+            .put((byte) 'e').put((byte) 'f');  
+    System.out.println(&quot;before flip()&quot; + buffer);  
+    // 转换为读取模式  
+    buffer.flip();  
+    System.out.println(&quot;before get():&quot; + buffer);  
+    System.out.println((char) buffer.get());  
+    System.out.println(&quot;after get():&quot; + buffer);  
+    // get(index)不影响position的值  
+    System.out.println((char) buffer.get(2));  
+    System.out.println(&quot;after get(index):&quot; + buffer);  
+    byte[] dst = new byte[10];  
+    buffer.get(dst, 0, 2);  
+    System.out.println(&quot;after get(dst, 0, 2):&quot; + buffer);  
+    System.out.println(&quot;\t dst:&quot; + new String(dst));  
+    System.out.println(&quot;buffer now is:&quot; + buffer);  
+    System.out.println(&quot;\t&quot; + new String(buffer.array()));  
+  
+    System.out.println(&quot;--------Test put-------&quot;);  
+    ByteBuffer bb = ByteBuffer.allocate(32);  
+    System.out.println(&quot;before put(byte):&quot; + bb);  
+    System.out.println(&quot;after put(byte):&quot; + bb.put((byte) 'z'));  
+    System.out.println(&quot;\t&quot; + bb.put(2, (byte) 'c'));  
+    // put(2,(byte) 'c')不改变position的位置  
+    System.out.println(&quot;after put(2,(byte) 'c'):&quot; + bb);  
+    System.out.println(&quot;\t&quot; + new String(bb.array()));  
+    // 这里的buffer是 abcdef[pos=3 lim=6 cap=32]  
+    bb.put(buffer);  
+    System.out.println(&quot;after put(buffer):&quot; + bb);  
+    System.out.println(&quot;\t&quot; + new String(bb.array()));  
+} 
+</code></pre>
+
+          </div>
+          
+        </div>
+        
+          <div class="w-full md:w-1/3">
+            <div class="mt-6 md:pl-8">
+              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
+              <div class="text-lg mb-6">2019-11-12</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
+              <div class="mb-6">
+                
+                  <a href="https://kilric.github.io/tag/java" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">java</a>
+                
+                  <a href="https://kilric.github.io/tag/rEO1muESo" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">nio</a>
+                
+              </div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
+              <div class="text-lg mb-6">9 min read</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
+              <div class="border-b border-gray-400">
+                
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-dao" class="text-lg hover:underline my-2 inline-block">JDBC-Dao模块化思想</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-pstmt" class="text-lg hover:underline my-2 inline-block">JDBC-PreparedStatement的使用</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
+</div>
+    </div>
+  </div>
+  <script>
+    Prism.highlightAll()
+  </script>
+</body>
+</html>

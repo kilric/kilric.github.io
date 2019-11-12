@@ -1,0 +1,571 @@
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+  <script src="https://kilric.github.io/media/prism.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+  <div class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="flex justify-between items-center mt-10">
+  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
+    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
+  </h1>
+  <div class="block lg:hidden" id="thumb-menu">
+    <button id="thumb-open" type="button" class="block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
+    </button>
+    <button id="thumb-close" type="button" class="hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
+    </button>
+  </div>
+</div>
+<div id="nav-list" class="lg:block hidden">
+  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
+    <div class="lg:flex -mb-px">
+      
+        
+          <a href="/" class="nav-link">首页</a>
+        
+      
+        
+          <a href="/archives" class="nav-link">归档</a>
+        
+      
+        
+          <a href="/tags" class="nav-link">标签</a>
+        
+      
+        
+          <a href="/post/about" class="nav-link">关于</a>
+        
+      
+    </div>
+    <div class="lg:flex">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
+        <div>RSS</div>
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
+        <div class="w-full md:w-2/3 mt-6">
+          <h1 class="text-4xl">java NIO(Channel)</h1>
+          
+          <div class="mt-6 lg:mt-10 post-content">
+            <p>java NIO(Channel)</p>
+<h1 id="1-nio与io的区别">1. NIO与IO的区别</h1>
+<p>NIO(New IO/Non-Blocking IO)是支持面向缓冲区、基于通道的IO操作。将以更高的效率进行文件的IO操作,可以代替原来的IO操作。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">IO</th>
+<th style="text-align:center">NIO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">面向流</td>
+<td style="text-align:center">面向缓冲区</td>
+</tr>
+<tr>
+<td style="text-align:center">阻塞IO</td>
+<td style="text-align:center">非阻塞IO</td>
+</tr>
+<tr>
+<td style="text-align:center">————</td>
+<td style="text-align:center">Selector(多路复用器、选择器)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="2-通道与缓冲区">2. 通道与缓冲区</h1>
+<p>通道是建立一个程序与资源之间的通路，即表示打开到IO设备(文件、套接字)的连接，不能通过通道直接操作资源(文件)，NIO是以块来操作资源的，所以要借助缓冲区来实现。</p>
+<p>通道负责传输，缓冲区负责存储数据，即当做数据的中转站。</p>
+<h1 id="3-缓冲区">3. 缓冲区</h1>
+<p>分为直接缓冲区，和间接缓冲区。</p>
+<p>间接缓冲区：在JVM的堆上建立的缓冲区。</p>
+<p>直接缓冲区：直接在系统内存上建立的缓冲区。</p>
+<h1 id="4-通道基础">4. 通道基础</h1>
+<h2 id="41-通过与系统内存交互示意图">4.1. 通过与系统内存交互示意图</h2>
+<figure data-type="image" tabindex="1"><img src="https://kilric.github.io/post-images/1572539532856.png" alt=""></figure>
+<h2 id="42-通道的主要实现">4.2. 通道的主要实现</h2>
+<ul>
+<li>
+<p>需要实现的接口： <code>java.nio.channels.Channel</code></p>
+</li>
+<li>
+<p>声明：</p>
+</li>
+</ul>
+<p>`public interface Channel</p>
+<p>extends Closeable`</p>
+<ul>
+<li>实现该接口的常用的类：</li>
+</ul>
+<ul>
+<li>
+<p>磁盘IO：<strong>FileChannel</strong></p>
+</li>
+<li>
+<p>网络IO：</p>
+</li>
+</ul>
+<ul>
+<li>
+<p><strong>SocketChannel</strong>（普通套接字通道[TCP]）</p>
+</li>
+<li>
+<p><strong>ServerSocketChannel</strong>（服务器套接字通道[TCP]）</p>
+</li>
+<li>
+<p><strong>DatagramChannel</strong> （UDP套接字通道）</p>
+</li>
+</ul>
+<h1 id="5-通道获取与使用">5. 通道获取与使用</h1>
+<h2 id="51-获取通道">5.1. 获取通道</h2>
+<ul>
+<li>对支持通道的类提供getChannel方法</li>
+</ul>
+<ul>
+<li>
+<p>本地IO：<strong>FileInputStream</strong>、<strong>FileOutputStream</strong>、<strong>RandomAccessFile</strong></p>
+</li>
+<li>
+<p>网络IO：<strong>Socket</strong>、<strong>ServerSocket</strong>、<strong>DatagramSocket</strong></p>
+</li>
+</ul>
+<ul>
+<li>各个通道提供了一个静态方法open</li>
+</ul>
+<ul>
+<li>
+<p><code>static FileChannel open(Path path, OpenOption... options)</code></p>
+</li>
+<li>
+<p><code>static SocketChannel open(SocketAddress remote)</code> / <code>static SocketChannel	open()</code></p>
+</li>
+<li>
+<p><code>static ServerSocketChannel	open()</code></p>
+</li>
+<li>
+<p><code>static DatagramChannel	open()</code> / <code>static DatagramChannel	open(ProtocolFamily family)</code></p>
+</li>
+</ul>
+<ul>
+<li>通过Files工具类获取</li>
+</ul>
+<ul>
+<li>
+<p><code>static SeekableByteChannel	newByteChannel(Path path, OpenOption... options)</code></p>
+</li>
+<li>
+<p>其中SeekableByteChannel是FileChannel的父类</p>
+</li>
+</ul>
+<h2 id="52-通道使用">5.2. 通道使用</h2>
+<p><strong>利用通道完成文件复制</strong></p>
+<h3 id="521-利用间接缓冲区完成">5.2.1. 利用间接缓冲区完成</h3>
+<pre><code class="language-java">
+public void tets1() throws Exception {
+
+    //获取输入输出的通道
+
+    FileChannel fin = FileInputStream(&quot;1.txt&quot;).getChannel();
+
+    FileChannel fout = FileOutputStream(&quot;2.txt&quot;).getChannel();
+
+
+    //分配指定大小的缓冲区,间接缓冲区
+
+    ByteBuffer buf = ByteBuffer.allocate(1024);
+
+
+    //将数据存入缓冲区
+
+    while(fin.read(buf) != -1){
+
+    //切换到读模式
+
+    buf.flip();
+
+    //写入
+
+    fout.write(buf);
+
+    //重置缓冲区，便于下次使用
+
+    buf.clear();
+
+    }
+
+    //关闭通道
+
+    fin.close();
+
+    fout.close();
+
+}
+
+</code></pre>
+<h3 id="522-利用内存映射文件完成直接缓冲区">5.2.2. 利用内存映射文件完成(直接缓冲区)</h3>
+<blockquote>
+<p>直接缓冲区</p>
+</blockquote>
+<pre><code class="language-java">
+public void test2() throws Exception {
+
+    //获取通道
+
+    FileChannel fin = FileChannel.open(Paths.get(&quot;1.txt&quot;),StandardOpenOption.READ);
+
+    FileChannel fout = FileChannel.open(Paths.get(&quot;2.txt&quot;),StandardOpenOption.WRITE,StandardOpenOption.CREATE);
+
+
+
+    //内存映射
+
+    MappedByteBuffer inBuf = fin.map(MapMode.READ_ONLY,0,fin.size());
+
+    MappedByteBuffer oBuf = fout.map(MapMode.READ_WRITE,0,fin.size());
+
+
+
+    //直接对缓冲区进行数据读写操作
+
+    Byte[] dst = new Byte[inBuf.limit()];
+
+
+
+    inBuf.get(dst);
+
+    oBuf.put(dst);
+
+
+
+    fin.close();
+
+    fout.close();
+
+}
+
+</code></pre>
+<h3 id="523-通道之间的数据传输">5.2.3. 通道之间的数据传输</h3>
+<blockquote>
+<p>直接缓冲区</p>
+</blockquote>
+<pre><code class="language-java">
+public void test3() throws Exception {
+
+    FileChannel fin = FileChannel.open(Paths.get(&quot;1.txt&quot;),StandardOpenOption.READ);
+
+    FileChannel fout = FileChannel.open(Paths.get(&quot;2.txt&quot;),StandardOpenOption.WRITE,StandardOpenOption.CREATE);
+
+    //直接利用通道传输
+
+    //fin.transformTo(0,fin.size(),fout);
+
+    fout.transformFrom(fin,0,fin.size());
+
+    fin.close();
+
+    fout.close();
+
+}
+
+</code></pre>
+<h3 id="524-分散scatter与聚集gather">5.2.4. 分散(Scatter)与聚集(Gather)</h3>
+<ul>
+<li>
+<p><strong>分散读取(Scattering Read)</strong>：将通道中的数据按顺序分散到多个缓冲区</p>
+</li>
+<li>
+<p><strong>聚集写入(Gathering Write)</strong>：将各个缓冲区的数据按顺序聚集到通道中</p>
+</li>
+</ul>
+<pre><code class="language-java">
+public void test4() throws Exception{
+
+    //获得随机访问文件
+
+    RandomAccessFile file = new RandomAccessFile(&quot;1.txt&quot;,&quot;rw&quot;);
+
+    //获得通道
+
+    FileChannel fileChannel = file.getChannel();
+
+    //获得指定大小的缓冲区
+
+    ByteBuff buf1 = ByteBuff.allocate(100);
+
+    ByteBuff buf2 = ByteBuffer.allacate(1024);
+
+    ByteBuffer[] bufs = {buf1,buf2};
+
+    //分散读到缓冲区
+
+    fileChannel.read(bufs);
+
+    //将每个缓冲区切换到读模式
+
+    for(ByteBuffer buf : bufs){
+
+        buf.flip();
+
+    }
+
+    System.out.println(new String(bufs[0],0,bufs[0].limit()));
+
+    System.out.println(&quot;============================&quot;);
+
+    System.out.println(new String(bufs[1],0,bufs[1].limit()));
+
+    //聚集写入
+
+    RandomAccessFile file2 = new RandomAccessFile(&quot;2.txt&quot;,&quot;rw&quot;);
+
+    FileChannel fileChannel2 = file2.getChannel();
+
+    fileChannel2.write(bufs);
+
+
+
+    fileChannel.close();
+
+    fileChannel2.close();
+
+}
+
+
+
+</code></pre>
+
+          </div>
+          
+        </div>
+        
+          <div class="w-full md:w-1/3">
+            <div class="mt-6 md:pl-8">
+              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
+              <div class="text-lg mb-6">2019-11-01</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
+              <div class="mb-6">
+                
+                  <a href="https://kilric.github.io/tag/java" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">java</a>
+                
+                  <a href="https://kilric.github.io/tag/rEO1muESo" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">nio</a>
+                
+              </div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
+              <div class="text-lg mb-6">5 min read</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
+              <div class="border-b border-gray-400">
+                
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-dao" class="text-lg hover:underline my-2 inline-block">JDBC-Dao模块化思想</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-pstmt" class="text-lg hover:underline my-2 inline-block">JDBC-PreparedStatement的使用</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
+</div>
+    </div>
+  </div>
+  <script>
+    Prism.highlightAll()
+  </script>
+</body>
+</html>

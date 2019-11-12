@@ -1,0 +1,422 @@
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+  <script src="https://kilric.github.io/media/prism.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+  <div class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="flex justify-between items-center mt-10">
+  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
+    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
+  </h1>
+  <div class="block lg:hidden" id="thumb-menu">
+    <button id="thumb-open" type="button" class="block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
+    </button>
+    <button id="thumb-close" type="button" class="hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
+    </button>
+  </div>
+</div>
+<div id="nav-list" class="lg:block hidden">
+  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
+    <div class="lg:flex -mb-px">
+      
+        
+          <a href="/" class="nav-link">首页</a>
+        
+      
+        
+          <a href="/archives" class="nav-link">归档</a>
+        
+      
+        
+          <a href="/tags" class="nav-link">标签</a>
+        
+      
+        
+          <a href="/post/about" class="nav-link">关于</a>
+        
+      
+    </div>
+    <div class="lg:flex">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
+        <div>RSS</div>
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
+        <div class="w-full md:w-2/3 mt-6">
+          <h1 class="text-4xl">必须掌握的Linux使用基础命令</h1>
+          
+          <div class="mt-6 lg:mt-10 post-content">
+            <pre><code>                                必须掌握的Linux使用基础命令
+</code></pre>
+<h2 id="1-帮助命令">1. 帮助命令</h2>
+<p><code>man --help</code><br>
+<code>man -h</code><br>
+<code>man [命令]</code>  #查询特定命令的帮助手册</p>
+<h2 id="2-echo">2. echo</h2>
+<p><code>echo $SHELL</code>  #打印</p>
+<h2 id="3-date">3. date</h2>
+<p><code>date</code>  #按照默认格式查看系统时间<br>
+<code>date &quot;+%j&quot;</code>  #今年中的第几天</p>
+<h2 id="4-reboot">4. reboot</h2>
+<p><code>reboot</code>  #重启</p>
+<h2 id="5-poweroff">5. poweroff</h2>
+<p><code>poweroff</code> #关机，默认只有root权限才可关机</p>
+<h2 id="6-wget-下载命令">6. wget 下载命令</h2>
+<p>参数 作用<br>
+-b 后台下载<br>
+-P 下载到指定目录<br>
+-t 最大尝试次数<br>
+-c 断点续传<br>
+-p 下载页面内所有资源<br>
+-r 递归下载</p>
+<pre><code class="language-shell">wget -t 3 -bcpr -P /usr/local/jiacoring.com   http://www.jiacoring.com
+</code></pre>
+<h2 id="7-ps">7. ps</h2>
+<p>ps命令用于查看系统中的进程状态<br>
+格式：ps [参数]<br>
+-a 显示所有进程<br>
+-u 用户以及其他详细信息<br>
+-x 显示无控制终端的进程<br>
+<code>ps -aux</code><br>
+<code>ps aux</code>  #组合使用，&quot;-&quot;可以省略</p>
+<h2 id="8-top">8. top</h2>
+<p>动态查看系统运维状态，相当于任务管理器。</p>
+<h2 id="9-pidof">9. pidof</h2>
+<p>查看指定服务进程的pid。<br>
+<code>pidof httpd</code>  #查看http服务的pid</p>
+<h2 id="10-kill">10. kill</h2>
+<p>格式：kill [参数]  进程pid</p>
+<h2 id="11-killall">11. killall</h2>
+<p>格式：killall [参数]  [服务名称]<br>
+用于终止某个服务对应的所有进程<br>
+<code>killall httpd</code> #终止http服务的所有进程</p>
+<h2 id="12-ifconfig">12. ifconfig</h2>
+<p>获取网卡配置与网络状态等信息。<br>
+<code>uname</code><br>
+查看系统内核与系统版本等信息。<br>
+<code>uname -a</code></p>
+<h2 id="13-uptime">13. uptime</h2>
+<p>查看系统的负载信息。</p>
+<h2 id="14-free">14. free</h2>
+<p>显示当前系统内存使用情况。<br>
+<code>free -h</code> #以人类可读的形式显示</p>
+<h2 id="15-who">15. who</h2>
+<p>查看当前登入本机的用户终端信息。</p>
+<h2 id="16-last">16. last</h2>
+<p>查看所有系统的登录记录。</p>
+<h2 id="17-history">17. history</h2>
+<p>查看历史执行过的命令。<br>
+<code>history</code>  #在/etc/profile中设置命令最大数量<br>
+<code>history -c</code> #清除历史命令</p>
+<h2 id="18-pwd">18. pwd</h2>
+<p>显示当前所处的工作目录。</p>
+<h2 id="19-cd">19. cd</h2>
+<p>切换工作目录。</p>
+<h2 id="20-ls">20. ls</h2>
+<p><code>ls -a</code> #查看所有文件，包括隐藏文件<br>
+<code>ls -l</code>   #查看文件属性<br>
+<code>ls -d</code>  #查看目录</p>
+<h2 id="21-more-cat-less">21. more、cat、less</h2>
+<p><code>more</code>  #用于查看纯文本文件(内容较多的)。<br>
+<code>head</code><br>
+head用于查看文本的前n行。<br>
+<code>head -n 20 readme.md</code>   #查看readme文件的前20行</p>
+<h2 id="22-tail">22. tail</h2>
+<p>tail用于查看文本的houn行<br>
+<code>tail -n 20 readme.md</code>  #查看readme文件的后20行</p>
+<h2 id="23-tr">23. tr</h2>
+<p>用于替换文本文件中的字符，格式：tr  [原始字符]  [目标字符]<br>
+<code>cat readme.md | tr [a-z] [A-Z]</code>  #将文件中的小写字母全部转为大写字母</p>
+<h2 id="24-wc">24. wc</h2>
+<p>统计文本中的行数、字数、字节数。<br>
+<code>wc -l test.txt</code> #只统计行数<br>
+<code>wc -w test.txt</code> #只统计字数<br>
+<code>wc -c test.txt</code>  #只统计字节数</p>
+<h2 id="25-stat">25. stat</h2>
+<p>查看文件的具体存储信息和时间等信息，格式为：stat  [文件名]</p>
+<h2 id="26-cut">26. cut</h2>
+<p>用于按列提取文本字符，格式：cut [参数]  [文件名]<br>
+<code>cut -d: -f1 /etc/passwd</code> #提取第一列，以“：”为间隔符</p>
+<h2 id="27-diff">27. diff</h2>
+<p>用于比较文件。<br>
+<code>diff --brief diff-a.txt diff_b.txt</code>  #显示比较后的结果，判断文件是否相同<br>
+<code>diff -c diff_a.txt diff_b.txt</code>  #描述文件内容具体的不同</p>
+<h2 id="28-touch">28. touch</h2>
+<h3 id="281-创建空白文件">28.1. 创建空白文件</h3>
+<p><code>touch [文件名]</code></p>
+<h3 id="282-设置文件时间">28.2. 设置文件时间</h3>
+<p><code>touch -a &quot;2016-06-04&quot; test.cfg</code>  #仅修改读取时间<br>
+<code>touch -m &quot;2018-03-12&quot; test.cfg</code>  #仅修改修改时间<br>
+<code>touch -d &quot;2019-03-29&quot; test.cfg</code>  #同时修改读取时间和修改时间</p>
+<h2 id="29-mkdir">29. mkdir</h2>
+<p>创建文件夹。<br>
+<code>mkdir test</code>  #创建test文件夹<br>
+<code>mkdir -p ./a/b/c/d</code>    #递归创建文件夹</p>
+<h2 id="30-cp">30. cp</h2>
+<p>复制文件或目录，格式：cp [参数]  [源文件]  [目标文件]<br>
+参数 作用<br>
+-p 保留原始文件属性<br>
+-d 若对象为链接文件，则保持链接文件的属性<br>
+-r 递归复制(目录)<br>
+-i 文件存在时，提示是否覆盖<br>
+-a 相当于-pdr</p>
+<h2 id="31-mv">31. mv</h2>
+<p>mv命令用于剪切文件或者将文件重命名。<br>
+格式：mv  [选项]  [源文件]  [目标路径/目标文件名]<br>
+<code>mv test.ini /usr/local/doc/test.ini.bak</code></p>
+<h2 id="32-rm">32. rm</h2>
+<p>删除文件或文件夹，格式：rm  [参数]  文件名<br>
+<code>rm -r</code>  文件夹名称   #递归删除文件夹<br>
+<code>rm -i</code>  问价   #删除文件</p>
+<h2 id="33-dd">33. dd</h2>
+<p>dd命令按照特定的大小和数据块来复制文件或者转换文件。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">if</td>
+<td style="text-align:center">输入的文件名称</td>
+</tr>
+<tr>
+<td style="text-align:center">of</td>
+<td style="text-align:center">输出的文件名称</td>
+</tr>
+<tr>
+<td style="text-align:center">bs</td>
+<td style="text-align:center">设置每个块的大小</td>
+</tr>
+<tr>
+<td style="text-align:center">count</td>
+<td style="text-align:center">块的数量</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>ps：Linux哲学文件，/dev/zero ,不会占用空间，但可以提供无穷无尽的数据。<br>
+Linux黑洞文件 ，/dev/null，将文件移动到这个文件夹相当于删除，它会被吞噬。<br>
+<code>dd if=/dev/zero of=560_file bs=560M count=1</code>  #将zero文件转换为560M大小的一个块的文件<br>
+<code>dd if=/dev/cdrom of=myiso.iso</code>  #将光盘文件直接制作成iso镜像文件</p>
+</blockquote>
+<h2 id="34-tar">34. tar</h2>
+<p>用于解压缩或者压缩文件<br>
+用Gzip：<br>
+<code>tar -zxvf filename.tar.gz -C [解压到的路径]</code> #解压<br>
+<code>tar -zcvf [压缩后的文件名] [目录路径]</code>  #压缩<br>
+用bzip2：<br>
+<code>tar -jxvf filename.tar.bz2 -C [解压到的路径]</code>  #解压<br>
+<code>tar -jcvf [压缩后的文件名] [目录路径]</code>  #压缩</p>
+<blockquote>
+<blockquote>
+<p>ps：参数v用来显示过程</p>
+</blockquote>
+</blockquote>
+<h2 id="35-file">35. file</h2>
+<p>file用来查看文件详细信息。<br>
+<code>file /dev/sda</code></p>
+
+          </div>
+          
+        </div>
+        
+          <div class="w-full md:w-1/3">
+            <div class="mt-6 md:pl-8">
+              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
+              <div class="text-lg mb-6">2019-11-12</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
+              <div class="mb-6">
+                
+                  <a href="https://kilric.github.io/tag/lwRYZTPao" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">Linux</a>
+                
+              </div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
+              <div class="text-lg mb-6">6 min read</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
+              <div class="border-b border-gray-400">
+                
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/linux-ug" class="text-lg hover:underline my-2 inline-block">用户和用户组管理</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/systemctl" class="text-lg hover:underline my-2 inline-block">systemctl管理服务状态</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/redhat-yum" class="text-lg hover:underline my-2 inline-block">Redhat系软件包管理命令</a>
+        </div>
+      
+    
+  
+
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
+</div>
+    </div>
+  </div>
+  <script>
+    Prism.highlightAll()
+  </script>
+</body>
+</html>

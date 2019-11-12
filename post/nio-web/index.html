@@ -1,0 +1,639 @@
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+  <script src="https://kilric.github.io/media/prism.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+  <div class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="flex justify-between items-center mt-10">
+  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
+    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
+  </h1>
+  <div class="block lg:hidden" id="thumb-menu">
+    <button id="thumb-open" type="button" class="block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
+    </button>
+    <button id="thumb-close" type="button" class="hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
+    </button>
+  </div>
+</div>
+<div id="nav-list" class="lg:block hidden">
+  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
+    <div class="lg:flex -mb-px">
+      
+        
+          <a href="/" class="nav-link">首页</a>
+        
+      
+        
+          <a href="/archives" class="nav-link">归档</a>
+        
+      
+        
+          <a href="/tags" class="nav-link">标签</a>
+        
+      
+        
+          <a href="/post/about" class="nav-link">关于</a>
+        
+      
+    </div>
+    <div class="lg:flex">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
+        <div>RSS</div>
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
+        <div class="w-full md:w-2/3 mt-6">
+          <h1 class="text-4xl">Java-NIO  网络IO</h1>
+          
+          <div class="mt-6 lg:mt-10 post-content">
+            <pre><code>                          NIO-网络IO
+</code></pre>
+<h1 id="1-基础">1. 基础</h1>
+<ul>
+<li>
+<p>使用NIO完成网络通信的三个要素</p>
+</li>
+<li>
+<p>通道（Channel）：负责连接</p>
+<ul>
+<li>实现了java.nio.channels.Channel接口，分为阻塞模式和非阻塞模式。</li>
+</ul>
+<ul>
+<li>SelectableChannel
+<ul>
+<li>AbstractSelectableChannel
+<ul>
+<li>SocketChannel</li>
+<li>ServerSocketChannel</li>
+<li>DatagramChannel</li>
+<li>Pipe.SinkChannel</li>
+<li>Pipe.SourceChannel</li>
+<li>SctpChannel</li>
+<li>SctpMultiChannel</li>
+<li>SctpServerChannel</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>缓冲区(Buffer)：负责数据的存取</li>
+<li>选择器(Selector)：是SelectableChannel的多路复用器，用于监控SelectableChannel的IO状况</li>
+</ul>
+<h1 id="2-阻塞式niotcp">2. 阻塞式NIO(TCP)</h1>
+<blockquote>
+<p><strong>案例1</strong>：客户端向服务端发送文件</p>
+</blockquote>
+<pre><code class="language-java">public class BlockingTest{
+    //客户端
+    public void client(){
+        Socket socket = new Socket();
+        socket.connect(new InetSocketAddress(&quot;127.0.0.1&quot;,9898),10);
+        SocketChannel sChannel = socket.getChannel();
+        
+        FileChannel inChannel = FileChannel.open(Paths.get(&quot;1.txt&quot;),StandardOpenOption.READ);
+        
+        ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+        
+        while(inChannel.read(byteBuf) != -1){
+            byteBuf.flip();
+            sChannel.write(byteBuf);
+            byteBuf.clear();
+        }
+        inChannel.close();
+        sChannel.close();
+    }
+
+    //服务端
+    public void server(){
+        //未绑定的
+        ServerSocket serverSocket = new ServerSocket(); 
+        serverSocket.bind(new InetSocketAddress(9898));  //直接用本地地址
+        //直接获取绑定好的
+        //
+        //ServerSocket serverSocket = new ServerSocket(9898);
+        //
+        //获取通道
+        ServerSocketChannel ssChannel = serverSocket.getChannel();
+        //用通道接收返回通道
+        SocketChannel sChannel = ssChannel.accept();
+        
+        //用套接字接收
+        //Socket socket = serverSocket.accept();
+        //SocketChannel sChannel = socket.getChannel();
+        //
+        
+        FileChannel fileChannel = FileChannel.open(Paths.get(&quot;2.txt&quot;),StandardOpenOption.WRITE,StandardOpenOption.CREATE);
+        
+        ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+        while(sChannel.read(byteBuf) != -1){
+            byteBuf.flip();
+            fileChannel.write(byteBuf);
+            byteBuf.clear();
+        }
+        
+        serverSocketChannel.close();
+        sChannel.close();
+        fileChannel.close();
+    }
+}
+</code></pre>
+<blockquote>
+<p><strong>案例2</strong>：发送文件并发送接收反馈</p>
+</blockquote>
+<pre><code class="language-java">public class BlockingTest{
+    //客户端
+    public void client(){
+        Socket socket = new Socket();
+        socket.connect(new InetSocketAddress(&quot;127.0.0.1&quot;,9898),10);
+        SocketChannel sChannel = socket.getChannel();
+        
+        FileChannel inChannel = FileChannel.open(Paths.get(&quot;1.txt&quot;),StandardOpenOption.READ);
+        
+        ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+        
+        while(inChannel.read(byteBuf) != -1){
+            byteBuf.flip();
+            sChannel.write(byteBuf);
+            byteBuf.clear();
+        }
+        sChannel.shutdownPutput();
+        //接收服务端的反馈，并输出
+        int len = 0;
+        while((len = sChannel.read(byteBuf)) != -1){
+            byteBuf.flip();
+            System.out.println(new String(byteBuf.array(),0,len));
+            byteBuf.clear();
+        }
+        inChannel.close();
+        sChannel.close();
+    }
+
+    //服务端
+    public void server(){
+        //未绑定的
+        ServerSocket serverSocket = new ServerSocket(); 
+        //绑定到特定主机和端口号，默认为本地
+        serverSocket.bind(new InetSocketAddress(9898));  //直接用本地地址
+        //直接获取绑定好的
+        //
+        //ServerSocket serverSocket = new ServerSocket(9898);
+        //
+        //获取通道
+        ServerSocketChannel ssChannel = serverSocket.getChannel();
+        //用通道接收返回通道
+        SocketChannel sChannel = ssChannel.accept();
+        
+        //用套接字接收
+        //Socket socket = serverSocket.accept();
+        //SocketChannel sChannel = socket.getChannel();
+        //
+        
+        FileChannel fileChannel = FileChannel.open(Paths.get(&quot;2.txt&quot;),StandardOpenOption.WRITE,StandardOpenOption.CREATE);
+        
+        ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+        while(sChannel.read(byteBuf) != -1){
+            byteBuf.flip();
+            fileChannel.write(byteBuf);
+            byteBuf.clear();
+        }
+        
+        //发送反馈给客户端
+        byteBuf.put(&quot;收到客户端发来的文件。&quot;.getBytes());
+        sChannel.write(byteBuf);
+        serverSocketChannel.close();
+        sChannel.close();
+        fileChannel.close();
+    }
+}
+</code></pre>
+<h1 id="3-非阻塞式iotcp">3. 非阻塞式IO(TCP)</h1>
+<p><strong>调用Channel接口的configureBlocking(Boolean blocking)来设置是否阻塞，true为阻塞，false为非阻塞，默认阻塞。</strong></p>
+<ul>
+<li>
+<p>选择器(Selector)是SelectableChannel对象的多路复用器，Selector可以同时监听多个SelectableChannel的IO状况，即利用Selector可以利用一个线程管理多个线程。</p>
+<ul>
+<li><code>public abstract class Selector extends Object i	mplements Closeable</code></li>
+</ul>
+</li>
+<li>
+<p>选择器（Selector）的使用</p>
+<ul>
+<li>当调用register(Selector selector,int ops)将通道注册到选择器时，选择器对通道的监听事件，需要第二个参数ops来指定。
+<ul>
+<li><code>SelectionKey	register​(Selector sel, int ops)</code></li>
+<li><code>abstract SelectionKey	register​(Selector sel, int ops, Object att)</code></li>
+</ul>
+</li>
+<li>可以监听的事件类型（可以使用SelectionKey的四个常量表示）
+<ul>
+<li>读：SelectionKey.OP_READ</li>
+<li>写：SelectionKey.OP_WRITE</li>
+<li>连接： SelectionKey.OP_CONNECT</li>
+<li>接收：SelectionKey.OP_ACCEPT</li>
+</ul>
+</li>
+<li>若注册时不仅监听一个事件，可以用位或( | )连接</li>
+</ul>
+</li>
+<li>
+<p>SelectionKey是SelectableChannel和Selector之间的注册关系。每次向选择器注册通道时就会选择一个事件(选择键)，选择键包含<br>
+两个为整值得操作集，操作集的每一位都表示该键的通道所支持的一类可选择操作。</p>
+</li>
+<li>
+<p>案例</p>
+</li>
+</ul>
+<pre><code class="language-java">public class TestNonBlockingIO{
+    public void client(){
+        Socket socket = new Socket(new InetSocketAddress(&quot;127.0.0.1&quot;,9898));
+        SocketChannel sChannel = socket.getChannel();
+        
+        sChannel.configureBlocking(false);
+        ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+		Scanner in = new Scanner(System.in);
+		while(in.hasNext()){
+			String str = in.next();
+			byteBuf.put((new LocalDate().getBytes() + &quot;\n&quot; + str).getBytes());
+        	byteBuf.flip();
+        	sChannel.write(byteBuf);
+		}
+
+        sChannel.close();
+    }
+    
+    public void server(){
+        //1.获取通道
+        ServerSocket sSocket = new ServerSocket(9898); //直接绑定到本地9898端口
+        ServerSocketChannel ssChannel = sSocket.getChannel();
+        //2.切换非阻塞模式
+        ssChannel.configureBlocking(flase);
+        //3.获取选择器,Selector,打开一个多路复用器
+        Selector selector = Selector.open();
+        //4.将通道注册到选择器上，并制定监听某个事件，这个selectionKey是ssChannel和选择器之间的注册关系
+        SelectionKey selectionKey = ssChannel.register(selector,SelectionKey.OP_ACCEPT | SelectionKey.OP_READ);
+        //5.轮巡式的获取选择器上已经“准备就绪”的事件
+        while(selector.select() &gt; 0){
+        selectorKeys()返回一个Set
+        	Set&lt;SelectionKey&gt; set = selector.selectedKeys();
+        	Iterator&lt;SelectionKey&gt; it = set.iterator(); //获取迭代器
+        	//6.获取准备就绪的事件
+        	while(it.hasNext()){
+        		SelectionKey sk = it.next();
+        		//7.判断是哪种时间就绪
+        		if(sk.isAcceptable()){
+        			SocketChannel sChannel = ssChannel.accept();
+        			//8.将sChannel设置成非阻塞模式
+        			sChannel.configureBlocking(flase);
+        			//9.将该通道注册到选择器上
+        			sChannel.register(selector,SelectionKey.READ);
+        			
+        		} else if(sk.isReadable()){
+        			//获取读就绪的通道
+        			SocketChannel sChannel = (SocketChannel)sk.channel();
+        			
+        			ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+        			
+        			int len = 0;
+        			while((len = sChannel.read(byteBuf)) &gt; 0){
+        				byteBuf.flip();
+        				System.out.println(new String(byteBuf.array(),0,len));
+        				byteBuf.clear();
+        			}
+        		}
+        		//取消选择键
+        		it.remove();
+        	}
+        	
+        }
+    }
+}
+
+</code></pre>
+<h1 id="4-非阻塞ioudp">4. 非阻塞IO(UDP)</h1>
+<ul>
+<li>案例：客户端服务端发送消息</li>
+</ul>
+<pre><code class="language-java">public class TestBlockingIO2{
+	//发送端
+	public void send(){
+		DatagramSocket datagramSocket = new DatagramSocket();
+		//datagramSocket.bind(new InetSocketAddress(&quot;127.0.0.1&quot;,9898));
+		//datagramSocket.connect(new InetSocketAddress(&quot;127.0.0.1&quot;,9898));		
+		DatagramChannel dsChannel = datagram.getChannel();
+		dsChannel.configureBlocking(false);
+		
+		Scanner in = new Scanner(System.in);
+
+		ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+		
+		while(in.hasNext()){
+			String str = in.next();
+			byteBuf.put((new Data().toString() + &quot;\n&quot; + str).getBytes());
+			byteBuf.flip();
+			dsChannel.send(byteBuf,new InetSocetAddress(&quot;127.0.0.1&quot;,9898));
+			byteBuf.clear();
+		}
+		dsChannel.close();
+	}
+	//服务端
+	public void receive(){
+		DatagramChannel dChannel = DatagramChannel.open();
+		dChannel.configureBlocking(false);
+		dChannel.bind(new InetSocketAddress(9898));
+		
+		Selector selector = Selector.open();
+		
+		dChannel.register(selector,SelectionKey.OP_READ);
+		
+		while(selector.select() &gt; 0){
+			Iterator&lt;SelectionKey&gt; it = selector.selectedKeys().iterator();
+			while(it.hasNext()){
+				SelectionKey sk = it.next();
+				if(sk.isReadable()){
+					DatagramChannel dc = (DatagramChannel)sk.channel();
+					ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+					
+					dc.receive(byteBuf);
+					byteBuf.flip();
+					System.out.println(new String(byteBuf.array(),0,byteBuf.limit()));
+					byteBuf.clear();
+					dc.close();
+				}
+			}
+			//取消选择键
+			it.remove();
+		}
+		dChannel.close();
+	}
+}
+</code></pre>
+<h1 id="5-管道pipe">5. 管道（Pipe）</h1>
+<blockquote>
+<p>管道是两个线程之间的单向数据连接，Pipe有一个source通道和一个sink通道。数据会被写到sink通道，从source通道读取。</p>
+</blockquote>
+<ul>
+<li>测试方法：</li>
+</ul>
+<pre><code class="language-java">public void testPipe(){
+	//获取管道
+	Pipe pipe = Pipe.open();
+	//写入
+	ByteBuffer byteBuf = ByteBuffer.allocate(1024);
+	//获取内部类写入通道
+	Pipe.SinkChannel sink = pipe.sink();
+	byteBuf.put(&quot;发送数据&quot;.getBytes());
+	sink.write(byteBuf);
+	
+	//读取
+	byteBuf.reset();
+	Pipe.SourceChannel source = pipe.source();
+	int len = source.read(byteBuf);
+	System.out.println(new String(byteBuf.array(),0,len));
+	
+	sink.close();
+	source.close();
+}
+
+
+</code></pre>
+
+          </div>
+          
+        </div>
+        
+          <div class="w-full md:w-1/3">
+            <div class="mt-6 md:pl-8">
+              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
+              <div class="text-lg mb-6">2019-11-12</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
+              <div class="mb-6">
+                
+                  <a href="https://kilric.github.io/tag/java" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">java</a>
+                
+                  <a href="https://kilric.github.io/tag/rEO1muESo" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">nio</a>
+                
+              </div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
+              <div class="text-lg mb-6">8 min read</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
+              <div class="border-b border-gray-400">
+                
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-dao" class="text-lg hover:underline my-2 inline-block">JDBC-Dao模块化思想</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-pstmt" class="text-lg hover:underline my-2 inline-block">JDBC-PreparedStatement的使用</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
+</div>
+    </div>
+  </div>
+  <script>
+    Prism.highlightAll()
+  </script>
+</body>
+</html>

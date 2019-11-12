@@ -1,0 +1,486 @@
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+  <script src="https://kilric.github.io/media/prism.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+  <div class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="flex justify-between items-center mt-10">
+  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
+    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
+  </h1>
+  <div class="block lg:hidden" id="thumb-menu">
+    <button id="thumb-open" type="button" class="block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
+    </button>
+    <button id="thumb-close" type="button" class="hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
+    </button>
+  </div>
+</div>
+<div id="nav-list" class="lg:block hidden">
+  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
+    <div class="lg:flex -mb-px">
+      
+        
+          <a href="/" class="nav-link">首页</a>
+        
+      
+        
+          <a href="/archives" class="nav-link">归档</a>
+        
+      
+        
+          <a href="/tags" class="nav-link">标签</a>
+        
+      
+        
+          <a href="/post/about" class="nav-link">关于</a>
+        
+      
+    </div>
+    <div class="lg:flex">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
+        <div>RSS</div>
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
+        <div class="w-full md:w-2/3 mt-6">
+          <h1 class="text-4xl">JDBC-连接数据库的方式</h1>
+          
+          <div class="mt-6 lg:mt-10 post-content">
+            <h1 id="1-jdbc概述">1. JDBC概述</h1>
+<h2 id="11-jdbc概念">1.1. JDBC概念</h2>
+<ul>
+<li>JDBC(Java Database Connectivity)是一个独立于特定数据库管理系统、通用的SQL数据库存取和操作的公共接口（一组API），定义了用来访问数据库的标准Java类库，（java.sql,javax.sql）使用这些类库可以以一种标准的方法、方便地访问数据库资源。</li>
+<li>JDBC为访问不同的数据库提供了一种统一的途径，为开发者屏蔽了一些细节问题。</li>
+<li>JDBC的目标是使Java程序员使用JDBC可以连接任何提供了JDBC驱动程序的数据库系统，这样就使得程序员无需对特定的数据库系统的特点有过多的了解，从而大大简化和加快了开发过程。<br>
+JDBC操作数据库大致过程如图：<br>
+<img src="https://kilric.github.io/post-images/1573560770778.png" alt=""></li>
+</ul>
+<h2 id="12-jdbc体系结构">1.2. JDBC体系结构</h2>
+<ul>
+<li>JDBC接口（API）包括两个层次：
+<ul>
+<li>面向应用的API：Java API，抽象接口，供应用程序开发人员使用（连接数据库，执行SQL语句，获得结果）。</li>
+<li>面向数据库的API：Java Driver API，供开发商开发数据库驱动程序用。</li>
+<li>JDBC是sun公司提供一套用于数据库操作的接口，java程序员只需要面向这套接口编程即可。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>不同的数据库厂商，需要针对这套接口，提供不同实现。不同的实现的集合，即为不同数据库的驱动，即面向接口编程。</p>
+</blockquote>
+<h2 id="13-jdbc程序编写步骤">1.3. JDBC程序编写步骤</h2>
+<figure data-type="image" tabindex="1"><img src="https://kilric.github.io/post-images/1573560816410.png" alt=""></figure>
+<blockquote>
+<p>ODBC(Open Database Connectivity，开放式数据库连接)，是微软在Windows平台下推出的。使用者在程序中只需要调用ODBC API，由 ODBC 驱动程序将调用转换成为对特定的数据库的调用请求。</p>
+</blockquote>
+<h1 id="2-数据库的连接">2. 数据库的连接</h1>
+<h2 id="21-连接要素">2.1. 连接要素</h2>
+<h3 id="211-driver接口">2.1.1. Driver接口</h3>
+<ul>
+<li>
+<p>java.sql.Driver 接口是所有 JDBC 驱动程序需要实现的接口。这个接口是提供给数据库厂商使用的，不同数据库厂商提供不同的实现。</p>
+</li>
+<li>
+<p>在程序中不需要直接去访问实现了 Driver 接口的类，而是由驱动程序管理器类(java.sql.DriverManager)去调用这些Driver实现。</p>
+<ul>
+<li>Oracle的驱动：oracle.jdbc.driver.OracleDriver</li>
+<li>mySql的驱动： com.mysql.jdbc.Driver</li>
+</ul>
+</li>
+</ul>
+<h3 id="212-加载与注册jdbc驱动">2.1.2. 加载与注册JDBC驱动</h3>
+<ul>
+<li>加载驱动：加载 JDBC 驱动需调用 Class 类的静态方法 forName()，向其传递要加载的 JDBC 驱动的类名
+<ul>
+<li>Class.forName(“com.mysql.jdbc.Driver”);</li>
+</ul>
+</li>
+<li>注册驱动：DriverManager 类是驱动程序管理器类，负责管理驱动程序
+<ul>
+<li>使用DriverManager.registerDriver(com.mysql.jdbc.Driver)来注册驱动</li>
+<li>通常不用显式调用 DriverManager 类的 registerDriver() 方法来注册驱动程序类的实例，因为 Driver 接口的驱动程序类都包含了静态代码块，在这个静态代码块中，会调用DriverManager.registerDriver() 方法来注册自身的一个实例。</li>
+</ul>
+</li>
+<li>Driver实现类的源码：<br>
+<img src="https://kilric.github.io/post-images/1573560866420.png" alt=""></li>
+</ul>
+<h3 id="213-连接url">2.1.3. 连接url</h3>
+<ul>
+<li>
+<p>JDBC URL 用于标识一个被注册的驱动程序，驱动程序管理器通过这个 URL 选择正确的驱动程序，从而建立到数据库的连接。</p>
+</li>
+<li>
+<p>JDBC URL的标准由三部分组成，各部分间用冒号分隔。</p>
+<ul>
+<li>jdbc:子协议:子名称</li>
+<li>协议：JDBC URL中的协议总是jdbc</li>
+<li>子协议：子协议用于标识一个数据库驱动程序</li>
+<li>子名称：一种标识数据库的方法。子名称可以依不同的子协议而变化，用子名称的目的是为了定位数据库提供足够的信息。包含主机名(对应服务端的ip地址)，端口号，数据库名。</li>
+<li>参数：用来配置某些参数，如开启/关闭SSL等。<br>
+举例：</li>
+</ul>
+</li>
+</ul>
+<pre><code>url=jdbc:mysql://localhost:3306/jdbc1?useSSL=false&amp;rewriteBatchedStatements=true
+user=root
+password=password
+driverName=com.mysql.jdbc.Driver
+</code></pre>
+<h3 id="214-用户名和密码">2.1.4. 用户名和密码</h3>
+<ul>
+<li>user,password可以用“属性名=属性值”方式告诉数据库。</li>
+<li>可以调用 DriverManager 类的 getConnection() 方法建立到数据库的连接。</li>
+</ul>
+<h2 id="22-数据库连接方式">2.2. 数据库连接方式</h2>
+<h3 id="221-方式一">2.2.1. 方式一：</h3>
+<pre><code class="language-java"> public void testConnection1() {
+ try {
+ 	//1.提供java.sql.Driver接口实现类的对象
+ 	Driver driver = null;
+ 	driver = new com.mysql.jdbc.Driver();
+ 	//2.提供url，指明具体操作的数据
+ 	String url = &quot;jdbc:mysql://localhost:3306/test&quot;;
+ 	//3.提供Properties的对象，指明用户名和密码
+	 Properties info = new Properties();
+ 	info.setProperty(&quot;user&quot;, &quot;root&quot;);
+ 	info.setProperty(&quot;password&quot;, &quot;abc123&quot;);
+ 	//4.调用driver的connect()，获取连接
+ 	Connection conn = driver.connect(url, info);
+ 	System.out.println(conn);
+ 	} catch (SQLException e) {
+ 		e.printStackTrace();
+ 	}
+ }
+</code></pre>
+<p>该方式暴露了第三方数据库的API.</p>
+<h3 id="222-方式二">2.2.2. 方式二：</h3>
+<pre><code class="language-java"> public void testConnection2() {
+ 	try {
+ 		//1.实例化Driver
+ 		String className = &quot;com.mysql.jdbc.Driver&quot;;
+ 		Class clazz = Class.forName(className);
+		 Driver driver = (Driver) clazz.newInstance();
+ 		//2.提供url，指明具体操作的数据
+ 		String url = &quot;jdbc:mysql://localhost:3306/test&quot;;
+ 		//3.提供Properties的对象，指明用户名和密码
+ 		Properties info = new Properties();
+ 		info.setProperty(&quot;user&quot;, &quot;root&quot;);
+ 		info.setProperty(&quot;password&quot;, &quot;abc123&quot;);
+ 		//4.调用driver的connect()，获取连接
+		 Connection conn = driver.connect(url, info);
+ 		System.out.println(conn);
+ 	} catch (Exception e) {
+ 		e.printStackTrace();
+ 	}
+ }
+</code></pre>
+<p>用反射实例化Driver,没有暴露出第三方API.</p>
+<h3 id="223-方式三">2.2.3. 方式三：</h3>
+<pre><code class="language-java"> public void testConnection3() {
+ 	try {
+ 		//1.数据库连接的4个基本要素：
+ 		String url = &quot;jdbc:mysql://localhost:3306/test&quot;;
+ 		String user = &quot;root&quot;;
+ 		String password = &quot;abc123&quot;;
+		String driverName = &quot;com.mysql.jdbc.Driver&quot;;
+ 		//2.实例化Driver
+ 		Class clazz = Class.forName(driverName);
+ 		Driver driver = (Driver) clazz.newInstance();
+		 //3.注册驱动
+		 DriverManager.registerDriver(driver);
+		 //4.获取连接
+		 Connection conn = DriverManager.getConnection(url, user, password);
+ 		System.out.println(conn);
+ 	} catch (Exception e) {
+ 		e.printStackTrace();
+ 	}
+ }
+</code></pre>
+<p>使用DriverManager实现数据库的连接。</p>
+<h3 id="224-连接方式四">2.2.4. 连接方式四</h3>
+<pre><code class="language-java">public void testConnection4() {
+	try {
+ 		//1.数据库连接的4个基本要素：
+ 		String url = &quot;jdbc:mysql://localhost:3306/test&quot;;
+ 		String user = &quot;root&quot;;
+ 		String password = &quot;abc123&quot;;
+ 		String driverName = &quot;com.mysql.jdbc.Driver&quot;;
+		//2.加载驱动 （①实例化Driver ②注册驱动）
+ 		Class.forName(driverName);
+ 		//Driver driver = (Driver) clazz.newInstance();
+ 		//3.注册驱动
+ 		//DriverManager.registerDriver(driver);
+ 		
+ 		//3.获取连接
+ 		Connection conn = DriverManager.getConnection(url, user, password);
+		 System.out.println(conn);
+ 	} catch (Exception e) {
+ 		e.printStackTrace();
+ 	}
+ }
+</code></pre>
+<p>2.2.5. 连接方式五：<br>
+常用!</p>
+<pre><code class="language-java"> public void testConnection5() throws Exception {
+ 	//1.加载配置文件
+ 	InputStream is = ClassLoader.getResourceAsStream(&quot;jdbc.properties&quot;);
+ 	Properties pros = new Properties();
+ 	pros.load(is);
+ 	//2.读取配置信息
+ 	String user = pros.getProperty(&quot;user&quot;);
+ 	String password = pros.getProperty(&quot;password&quot;);
+ 	String url = pros.getProperty(&quot;url&quot;);
+ 	String driverClass = pros.getProperty(&quot;driverClass&quot;);
+ 	//3.加载驱动
+ 	Class.forName(driverClass);
+ 	//4.获取连接
+ 	Connection conn = DriverManager.getConnection(url,user,password);
+	System.out.println(conn);
+ }
+</code></pre>
+<p>配置文件在jdbc.properties中，以键值对的方式存在。</p>
+<pre><code>#url=jdbc:mysql://localhost:3306/jdbc1?useSSL=false&amp;rewriteBatchedStatements=true
+#如果主机在本地，也可以用下面的url
+url=jdbc:mysql:///jdbc1?useSSL=false&amp;rewriteBatchedStatements=true
+user=root
+password=password
+driverName=com.mysql.jdbc.Driver
+</code></pre>
+
+          </div>
+          
+        </div>
+        
+          <div class="w-full md:w-1/3">
+            <div class="mt-6 md:pl-8">
+              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
+              <div class="text-lg mb-6">2019-11-12</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
+              <div class="mb-6">
+                
+                  <a href="https://kilric.github.io/tag/jdbc" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">jdbc</a>
+                
+                  <a href="https://kilric.github.io/tag/java" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">java</a>
+                
+              </div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
+              <div class="text-lg mb-6">7 min read</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
+              <div class="border-b border-gray-400">
+                
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-dao" class="text-lg hover:underline my-2 inline-block">JDBC-Dao模块化思想</a>
+        </div>
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+  
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
+</div>
+    </div>
+  </div>
+  <script>
+    Prism.highlightAll()
+  </script>
+</body>
+</html>

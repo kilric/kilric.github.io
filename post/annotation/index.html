@@ -1,0 +1,717 @@
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+  <script src="https://kilric.github.io/media/prism.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+  <div class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="flex justify-between items-center mt-10">
+  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
+    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
+  </h1>
+  <div class="block lg:hidden" id="thumb-menu">
+    <button id="thumb-open" type="button" class="block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
+    </button>
+    <button id="thumb-close" type="button" class="hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
+    </button>
+  </div>
+</div>
+<div id="nav-list" class="lg:block hidden">
+  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
+    <div class="lg:flex -mb-px">
+      
+        
+          <a href="/" class="nav-link">首页</a>
+        
+      
+        
+          <a href="/archives" class="nav-link">归档</a>
+        
+      
+        
+          <a href="/tags" class="nav-link">标签</a>
+        
+      
+        
+          <a href="/post/about" class="nav-link">关于</a>
+        
+      
+    </div>
+    <div class="lg:flex">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
+        <div>RSS</div>
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
+        <div class="w-full md:w-2/3 mt-6">
+          <h1 class="text-4xl">Java注解总结</h1>
+          
+          <div class="mt-6 lg:mt-10 post-content">
+            <pre><code>                        Java注解
+</code></pre>
+<h1 id="1-注解">1. 注解：</h1>
+<blockquote>
+<p>从JDK5开始,Java增加对元数据的支持，也就是注解，注解与注释是有一定区别的，可以把注解理解为代码里的特殊标记，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。通过注解开发人员可以在不改变原有代码和逻辑的情况下在源代码中嵌入补充信息。</p>
+</blockquote>
+<h2 id="11-注解的定义">1.1. 注解的定义</h2>
+<p>注解通过 @interface关键字进行定义。</p>
+<p>public @interface TestAnnotation {</p>
+<pre><code>String value() default &quot;&quot;;
+</code></pre>
+<p>}</p>
+<h2 id="12-注解的应用">1.2. 注解的应用</h2>
+<p>上面创建了一个注解，那么注解的的使用方法是什么呢。</p>
+<p>@TestAnnotation<br>
+public class Test{</p>
+<p>}<br>
+创建一个类 Test,然后在类定义的地方加上 @TestAnnotation就可以用 Test注解这个类了。</p>
+<p>不过，要想注解能够正常工作，还需要元注解。</p>
+<h2 id="13-元注解">1.3. 元注解</h2>
+<ul>
+<li>
+<p>元注解是可以注解到注解上的注解，或者说元注解是一种基本注解，但是它能够应用到其它的注解上面。</p>
+</li>
+<li>
+<p>元注解标签有 @Retention、@Documented、@Target、@Inherited、@Repeatable 5 种。</p>
+</li>
+</ul>
+<h4 id="1311-retention">1.3.1.1. @Retention</h4>
+<p>Retention 的英文意为保留期的意思。</p>
+<p>当 @Retention 应用到一个注解上的时候，它解释说明了这个注解的的存活时间。</p>
+<p>它的取值如下：</p>
+<ul>
+<li>
+<p>RetentionPolicy.SOURCE 注解只在源码阶段保留，在编译器进行编译时它将被丢弃忽视。</p>
+</li>
+<li>
+<p>RetentionPolicy.CLASS 注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。注解默认使用这种方式。</p>
+</li>
+<li>
+<p>RetentionPolicy.RUNTIME 注解可以保留到程序运行的时候，它会被加载进入到 JVM 中，所以在程序运行时可以获取到它们。因此可以使用反射机制读取该注解的信息。</p>
+</li>
+</ul>
+<pre><code class="language-java">@Retention(RetentionPolicy.RUNTIME)
+public @interface TestAnnotation {
+
+    String value() default &quot;&quot;;
+}
+</code></pre>
+<h4 id="1312-documented">1.3.1.2. @Documented</h4>
+<p>顾名思义，这个元注解肯定是和文档有关。它的作用是能够将注解中的元素包含到 Javadoc 中去。</p>
+<h4 id="1313-target">1.3.1.3. @Target</h4>
+<p>Target 是目标的意思，@Target 指定了注解运用的地方。</p>
+<p>可以这样理解，当一个注解被 @Target 注解时，这个注解就被限定了运用的场景。</p>
+<p>@Target 有下面的取值</p>
+<ul>
+<li>
+<p>ElementType.ANNOTATION_TYPE 可以给一个注解进行注解</p>
+</li>
+<li>
+<p>ElementType.CONSTRUCTOR 可以给构造方法进行注解</p>
+</li>
+<li>
+<p>ElementType.FIELD 可以给属性进行注解</p>
+</li>
+<li>
+<p>ElementType.LOCAL_VARIABLE 可以给局部变量进行注解</p>
+</li>
+<li>
+<p>ElementType.METHOD 可以给方法进行注解</p>
+</li>
+<li>
+<p>ElementType.PACKAGE 可以给一个包进行注解</p>
+</li>
+<li>
+<p>ElementType.PARAMETER 可以给一个方法内的参数进行注解</p>
+</li>
+<li>
+<p>ElementType.TYPE 可以给一个类型进行注解，比如类、接口、枚举</p>
+</li>
+</ul>
+<p>@Target(ElementType.TYPE)//类、接口（包括注解类型）或枚举</p>
+<p>public @interface TestAnnotation {</p>
+<pre><code>String value() default &quot;&quot;;
+</code></pre>
+<p>}</p>
+<h4 id="1314-retentionretentionpolicyruntime">1.3.1.4. @Retention(RetentionPolicy.RUNTIME)</h4>
+<h4 id="1315-inherited">1.3.1.5. @Inherited</h4>
+<p>Inherited 是继承的意思，但是它并不是说注解本身可以继承，而是说如果一个超类被 @Inherited 注解过的注解进行注解的话，那么如果它的子类没有被任何注解应用的话，那么这个子类就继承了超类的注解。</p>
+<h4 id="1316-repeatable">1.3.1.6. @Repeatable</h4>
+<p>Repeatable 自然是可重复的意思。@Repeatable 是 Java 1.8 才加进来的，所以算是一个新的特性。</p>
+<p>什么样的注解会多次应用呢？通常是注解的值可以同时取多个。</p>
+<h2 id="14-注解的属性">1.4. 注解的属性</h2>
+<p>注解的属性也叫做成员变量。注解只有成员变量，没有方法。注解的成员变量在注解的定义中以“无形参的方法”形式来声明，其方法名定义了该成员变量的名字，其返回值定义了该成员变量的类型。</p>
+<pre><code class="language-java">@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TestAnnotation{
+
+    int id();
+    String msg();
+}
+</code></pre>
+<p>上面代码定义了 @TestAnnotation 这个注解中拥有 id 和 msg 两个属性。在使用的时候，我们应该给它们进行赋值。</p>
+<p>赋值的方式是在注解的括号内以 value=&quot;&quot; 形式，多个属性之前用 ，隔开。</p>
+<pre><code class="language-java">@TestAnnotation(id=3,msg=&quot;hello annotation&quot;)
+public class Test {
+}
+</code></pre>
+<p>需要注意的是，使用@interface自定义注解时，自动继承了java.lang.annotation.Annotation接口，由编译程序自动完成其他细节。在定义注解时，不能继承其他的注解或接口。@interface用来声明一个注解，其中的每一个方法实际上是声明了一个属性。方法的名称就是属性的名称，返回值类型就是参数的类型（返回值类型只能是8 种基本数据类型、Class、String、enum及它们的数组）。</p>
+<h2 id="15-定义注解格式">1.5. 定义注解格式：</h2>
+<ul>
+<li>
+<p>public @interface 注解名 {定义体}</p>
+</li>
+<li>
+<p>注解参数的可支持数据类型：</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>所有基本数据类型（int,float,boolean,byte,double,char,long,short)</p>
+</li>
+<li>
+<p>String类型</p>
+</li>
+<li>
+<p>Class类型</p>
+</li>
+<li>
+<p>enum类型</p>
+</li>
+<li>
+<p>Annotation类型</p>
+</li>
+<li>
+<p>以上所有类型的数组</p>
+</li>
+</ul>
+<ul>
+<li>Annotation类型里面的参数该怎么设定:</li>
+</ul>
+<ul>
+<li>
+<p>第一,只能用public或默认(default)这两个访问权修饰.例如,String value();这里把方法设为defaul默认类型；</p>
+</li>
+<li>
+<p>第二,参数成员只能用基本类型byte,short,char,int,long,float,double,boolean八种基本数据类型和 String,Enum,Class,annotations等数据类型,以及这一些类型的数组.例如,String value();这里的参数成员就为String;</p>
+</li>
+<li>
+<p>第三,如果只有一个参数成员,最好把参数名称设为&quot;value&quot;,后加小括号。</p>
+</li>
+</ul>
+<pre><code class="language-java">@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface Todo {
+　　public enum Priority {LOW, MEDIUM, HIGH}
+　　public enum Status {STARTED, NOT_STARTED}
+　　String author() default &quot;Yash&quot;;
+　　Priority priority() default Priority.LOW;
+　　Status status() default Status.NOT_STARTED;
+}
+</code></pre>
+<p>下面的例子演示了如何使用上面的注解。</p>
+<pre><code class="language-java">@Todo(priority = Todo.Priority.MEDIUM, author = &quot;jiaruigang&quot;, status = Todo.Status.STARTED)
+public void incompleteMethod1() {
+//Some business logic is written
+//But it’s not complete yet
+}
+</code></pre>
+<p>注解中属性可以有默认值，默认值需要用 default 关键值指定。</p>
+<pre><code>@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TestAnnotation{
+
+    int id() default -1;
+    String msg() defaul &quot;hi&quot;t;
+
+}
+</code></pre>
+<p>因为有默认值，所以无需要再在 @TestAnnotation 后面的括号里面进行赋值了，这一步可以省略。</p>
+<pre><code class="language-java">@TestAnnotation()
+public class Test {
+
+}
+</code></pre>
+<p>另外，还有一种情况。如果一个注解内仅仅只有一个名字为 value 的属性时，应用这个注解时可以直接接属性值填写到括号内。</p>
+<h2 id="16-java-预置的注解">1.6. java 预置的注解</h2>
+<p>学习了上面相关的知识，我们已经可以自己定义一个注解了。其实 Java 语言本身已经提供了几个现成的注解。</p>
+<h3 id="161-deprecated">1.6.1. @Deprecated</h3>
+<p>这个元素是用来标记过时的元素，想必大家在日常开发中经常碰到。编译器在编译阶段遇到这个注解时会发出提醒警告，告诉开发者正在调用一个过时的元素比如过时的方法、过时的类、过时的成员变量。</p>
+<h3 id="162-override">1.6.2. @Override</h3>
+<p>这个大家应该很熟悉了，提示子类要复写父类中被 @Override 修饰的方法</p>
+<h3 id="163-suppresswarnings">1.6.3. @SuppressWarnings</h3>
+<p>阻止警告的意思。之前说过调用被 @Deprecated 注解的方法后，编译器会警告提醒，而有时候开发者会忽略这种警告，他们可以在调用的地方通过 @SuppressWarnings 达到目的。</p>
+<h3 id="164-safevarargs">1.6.4. @SafeVarargs</h3>
+<p>参数安全类型注解。它的目的是提醒开发者不要用参数做一些不安全的操作,它的存在会阻止编译器产生 unchecked 这样的警告。它是在 Java 1.7 的版本中加入的。</p>
+<h3 id="165-functionalinterface">1.6.5. @FunctionalInterface</h3>
+<p>函数式接口注解，这个是 Java 1.8 版本引入的新特性。函数式编程很火，所以 Java 8 也及时添加了这个特性。</p>
+<p>函数式接口 (Functional Interface) 就是一个具有一个方法的普通接口。</p>
+<p>我们进行线程开发中常用的 Runnable 就是一个典型的函数式接口，源码可以看到它就被 @FunctionalInterface 注解。</p>
+<h2 id="17-注解的提取">1.7. 注解的提取</h2>
+<p>前面的部分讲了注解的基本语法，现在是时候检测我们所学的内容了。</p>
+<p>要想正确检阅注解的内容信息，离不开一个手段，那就是反射。</p>
+<h3 id="171-注解与反射">1.7.1. 注解与反射。</h3>
+<p>注解通过反射获取。</p>
+<p>首先可以通过 Class 对象的 isAnnotationPresent() 方法判断它是否应用了某个注解</p>
+<p><code>public boolean isAnnotationPresent(Class&lt;? extends Annotation&gt; annotationClass) {}</code></p>
+<p>然后通过 getAnnotation() 方法来获取 Annotation 对象。</p>
+<p><code>public &lt;A extends Annotation&gt; A getAnnotation(Class&lt;A&gt; annotationClass) {}</code></p>
+<p>或者是 getAnnotations() 方法。</p>
+<p><code>public Annotation[] getAnnotations() {}</code></p>
+<p>前一种方法返回指定类型的注解，后一种方法返回注解到这个元素上的所有注解。</p>
+<p>如果获取到的 Annotation 如果不为 null，则就可以调用它们的属性方法了。比如</p>
+<pre><code class="language-java">@TestAnnotation()
+public class Test {
+    
+    public static void main(String[] args) {
+        
+        boolean hasAnnotation = Test.class.isAnnotationPresent(TestAnnotation.class);
+        
+        if ( hasAnnotation ) {
+            TestAnnotation testAnnotation = Test.class.getAnnotation(TestAnnotation.class);
+            
+            System.out.println(&quot;id:&quot;+testAnnotation.id());
+            System.out.println(&quot;msg:&quot;+testAnnotation.msg());
+        }
+
+    }
+
+}
+</code></pre>
+<p>程序的运行结果是：</p>
+<pre><code>**id:-1
+msg:**
+</code></pre>
+<p>这个正是 TestAnnotation 中 id 和 msg 的默认值。</p>
+<p>上面的例子中，只是检阅出了注解在类上的注解，其实属性、方法上的注解照样是可以的。同样还是要假手于反射。</p>
+<pre><code class="language-java">@TestAnnotation(msg=&quot;hello&quot;)
+public class Test {
+    
+    @Check(value=&quot;hi&quot;)
+    int a;
+    
+    
+    @Perform
+    public void testMethod(){}
+    
+    
+    @SuppressWarnings(&quot;deprecation&quot;)
+    public void test1(){
+        Hero hero = new Hero();
+        hero.say();
+        hero.speak();
+    }
+    public static void main(String[] args) {
+        
+        boolean hasAnnotation = Test.class.isAnnotationPresent(TestAnnotation.class);
+        
+        if ( hasAnnotation ) {
+            TestAnnotation testAnnotation = Test.class.getAnnotation(TestAnnotation.class);
+            //获取类的注解
+            System.out.println(&quot;id:&quot;+testAnnotation.id());
+            System.out.println(&quot;msg:&quot;+testAnnotation.msg());
+        }
+       
+        try {
+            Field a = Test.class.getDeclaredField(&quot;a&quot;);
+            a.setAccessible(true);
+            //获取一个成员变量上的注解
+            Check check = a.getAnnotation(Check.class);
+
+            if ( check != null ) {
+                System.out.println(&quot;check value:&quot;+check.value());
+            }
+
+            Method testMethod = Test.class.getDeclaredMethod(&quot;testMethod&quot;);
+
+            if ( testMethod != null ) {
+                // 获取方法中的注解
+                Annotation[] ans = testMethod.getAnnotations();
+                for( int i = 0;i &lt; ans.length;i++) {
+                    System.out.println(&quot;method testMethod annotation:&quot;+ans[i].annotationType().getSimpleName());
+                }
+            }
+        } catch (NoSuchFieldException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
+
+    }
+
+}
+</code></pre>
+<p>它们的结果如下：</p>
+<pre><code>id:-1
+msg:hello
+check value:hi
+method testMethod annotation:Perform
+</code></pre>
+<p>需要注意的是，如果一个注解要在运行时被成功提取，那么 @Retention(RetentionPolicy.RUNTIME) 是必须的。</p>
+<h2 id="18-注解的使用场景">1.8. 注解的使用场景</h2>
+<blockquote>
+<p>Java 官方文档写明：<br>
+注解是一系列元数据，它提供数据用来解释程序代码，但是注解并非是所解释的代码本身的一部分。注解对于代码的运行效果没有直接影响。</p>
+</blockquote>
+<ul>
+<li>注解有许多用处，主要如下：</li>
+</ul>
+<ul>
+<li>提供信息给编译器： 编译器可以利用注解来探测错误和警告信息</li>
+<li>编译阶段时的处理： 软件工具可以用来利用注解信息来生成代码、Html文档或者做其它相应处理。</li>
+<li>运行时的处理： 某些注解可以在程序运行的时候接受代码的提取</li>
+</ul>
+<ul>
+<li>值得注意的是，注解不是代码本身的一部分。</li>
+<li>注解同样无法改变代码本身，注解只是某些工具的的工具。</li>
+<li>注解主要针对的是编译器和其它工具软件(SoftWare tool)。</li>
+<li>当开发者使用了Annotation 修饰了类、方法、Field 等成员之后，这些 Annotation 不会自己生效，必须由开发者提供相应的代码来提取并处理 Annotation 信息。这些处理提取和处理 Annotation 的代码统称为 APT（Annotation Processing Tool)。</li>
+</ul>
+<pre><code class="language-java">package ceshi;
+import ceshi.Jiecha;
+
+public class NoBug {
+    
+    @Jiecha
+    public void suanShu(){
+        System.out.println(&quot;1234567890&quot;);
+    }
+    @Jiecha
+    public void jiafa(){
+        System.out.println(&quot;1+1=&quot;+1+1);
+    }
+    @Jiecha
+    public void jiefa(){
+        System.out.println(&quot;1-1=&quot;+(1-1));
+    }
+    @Jiecha
+    public void chengfa(){
+        System.out.println(&quot;3 x 5=&quot;+ 3*5);
+    }
+    @Jiecha
+    public void chufa(){
+        System.out.println(&quot;6 / 0=&quot;+ 6 / 0);
+    }
+    
+    public void ziwojieshao(){
+        System.out.println(&quot;我写的程序没有 bug!&quot;);
+    }
+
+}
+</code></pre>
+<pre><code class="language-java">package ceshi;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Jiecha {
+
+}
+</code></pre>
+<p>然后，我再编写一个测试类 TestTool 就可以测试 NoBug 相应的方法了。</p>
+<pre><code class="language-java">package ceshi;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class TestTool {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        NoBug testobj = new NoBug();
+        
+        Class clazz = testobj.getClass();
+        
+        Method[] method = clazz.getDeclaredMethods();
+        //用来记录测试产生的 log 信息
+        StringBuilder log = new StringBuilder();
+        // 记录异常的次数
+        int errornum = 0;
+        
+        for ( Method m: method ) {
+            // 只有被 @Jiecha 标注过的方法才进行测试
+            if ( m.isAnnotationPresent( Jiecha.class )) {
+                try {
+                    m.setAccessible(true);
+                    m.invoke(testobj, null);
+                
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    //e.printStackTrace();
+                    errornum++;
+                    log.append(m.getName());
+                    log.append(&quot; &quot;);
+                    log.append(&quot;has error:&quot;);
+                    log.append(&quot;\n\r  caused by &quot;);
+                    //记录测试过程中，发生的异常的名称
+                    log.append(e.getCause().getClass().getSimpleName());
+                    log.append(&quot;\n\r&quot;);
+                    //记录测试过程中，发生的异常的具体信息
+                    log.append(e.getCause().getMessage());
+                    log.append(&quot;\n\r&quot;);
+                } 
+            }
+        }
+        
+        
+        log.append(clazz.getSimpleName());
+        log.append(&quot; has  &quot;);
+        log.append(errornum);
+        log.append(&quot; error.&quot;);
+        
+        // 生成测试报告
+        System.out.println(log.toString());
+
+    }
+
+}
+</code></pre>
+<p>测试的结果是：</p>
+<pre><code>1234567890
+1+1=11
+1-1=0
+3 x 5=15
+chufa has error:
+
+  caused by ArithmeticException
+
+/ by zero
+
+NoBug has  1 error.
+</code></pre>
+<p>提示 NoBug 类中的 chufa() 这个方法有异常，这个异常名称叫做 ArithmeticException，原因是运算过程中进行了除 0 的操作。</p>
+<p>所以，NoBug 这个类有 Bug。</p>
+<p>这样，通过注解我完成了我自己的目的，那就是对别人的代码进行测试。</p>
+<p>注解应用实例:<br>
+注解的功能很强大，Spring和Hebernate这些框架在日志和有效性中大量使用了注解功能。注解可以应用在使用标记接口的地方。不同的是标记接口用来定义完整的类，但你可以为单个的方法定义注释，例如是否将一个方法暴露为服务。</p>
+<p>在最新的servlet3.0中引入了很多新的注解，尤其是和servlet安全相关的注解。</p>
+<p>HandlesTypes –该注解用来表示一组传递给ServletContainerInitializer的应用类。</p>
+<p>HttpConstraint – 该注解代表所有HTTP方法的应用请求的安全约束，和ServletSecurity注释中定义的HttpMethodConstraint安全约束不同。</p>
+<p>HttpMethodConstraint – 指明不同类型请求的安全约束，和ServletSecurity 注解中描述HTTP协议方法类型的注释不同。</p>
+<p>MultipartConfig –该注解标注在Servlet上面，表示该Servlet希望处理的请求的 MIME 类型是 multipart/form-data。</p>
+<p>ServletSecurity 该注解标注在Servlet继承类上面，强制该HTTP协议请求遵循安全约束。</p>
+<p>WebFilter – 该注解用来声明一个Server过滤器；</p>
+<p>WebInitParam – 该注解用来声明Servlet或是过滤器的中的初始化参数，通常配合 @WebServlet 或者 @WebFilter 使用。</p>
+<p>WebListener –该注解为Web应用程序上下文中不同类型的事件声明监听器。</p>
+<p>WebServlet –该注解用来声明一个Servlet的配置。</p>
+<h2 id="19-总结">1.9. 总结：</h2>
+<ul>
+<li>如果注解难于理解，就把它类同于标签，标签为了解释事物，注解为了解释代码。</li>
+<li>注解的基本语法，创建如同接口，但是多了个 @ 符号。</li>
+<li>注解的元注解。</li>
+<li>注解的属性。</li>
+<li>注解主要给编译器及工具类型的软件用的。</li>
+<li>注解的提取需要借助于 Java 的反射技术，反射比较慢，所以注解使用时也需要谨慎计较时间成本。</li>
+</ul>
+
+          </div>
+          
+        </div>
+        
+          <div class="w-full md:w-1/3">
+            <div class="mt-6 md:pl-8">
+              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
+              <div class="text-lg mb-6">2019-11-12</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
+              <div class="mb-6">
+                
+                  <a href="https://kilric.github.io/tag/java" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">java</a>
+                
+              </div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
+              <div class="text-lg mb-6">16 min read</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
+              <div class="border-b border-gray-400">
+                
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-dao" class="text-lg hover:underline my-2 inline-block">JDBC-Dao模块化思想</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-pstmt" class="text-lg hover:underline my-2 inline-block">JDBC-PreparedStatement的使用</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
+</div>
+    </div>
+  </div>
+  <script>
+    Prism.highlightAll()
+  </script>
+</body>
+</html>

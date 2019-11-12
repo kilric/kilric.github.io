@@ -1,0 +1,445 @@
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title></title>
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+<script src="https://kilric.github.io/media/script.js"></script>
+
+    
+
+  <script src="https://kilric.github.io/media/prism.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+  <div class="antialiased">
+    <div class="max-w-5xl mx-auto px-6 md:px-8">
+      <div class="flex justify-between items-center mt-10">
+  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
+    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
+  </h1>
+  <div class="block lg:hidden" id="thumb-menu">
+    <button id="thumb-open" type="button" class="block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
+    </button>
+    <button id="thumb-close" type="button" class="hidden">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
+    </button>
+  </div>
+</div>
+<div id="nav-list" class="lg:block hidden">
+  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
+    <div class="lg:flex -mb-px">
+      
+        
+          <a href="/" class="nav-link">首页</a>
+        
+      
+        
+          <a href="/archives" class="nav-link">归档</a>
+        
+      
+        
+          <a href="/tags" class="nav-link">标签</a>
+        
+      
+        
+          <a href="/post/about" class="nav-link">关于</a>
+        
+      
+    </div>
+    <div class="lg:flex">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
+        <div>RSS</div>
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
+      </a>
+    </div>
+  </div>
+</div>
+      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
+        <div class="w-full md:w-2/3 mt-6">
+          <h1 class="text-4xl">目录访问的四种方式</h1>
+          
+          <div class="mt-6 lg:mt-10 post-content">
+            <pre><code>                              目录访问的四种方式
+</code></pre>
+<h1 id="1-fileslist">1. Files.list</h1>
+<blockquote>
+<p>类: <strong>java.nio.file.Files</strong></p>
+</blockquote>
+<p>函数声明:</p>
+<p><code>static Stream&lt;Path&gt; list(Path path) throws IOEXception</code></p>
+<p>作用:遍历特定目录,并返回包含该目录下项目的Path流,目录是被惰性读取的,因此不会读取子目录.<br>
+注意:读取目录涉及需要关闭系统资源,所以应该使用try块.</p>
+<blockquote>
+<p>例子:</p>
+</blockquote>
+<pre><code class="language-java">import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class DirList {
+    public static void main(String[] args) throws IOException {
+        //list方法不会进入子目录
+        try(Stream&lt;Path&gt; entries = Files.list (Paths.get (&quot;D:\\Java&quot;))){
+            entries.forEach (System.out::println);
+        }
+    }
+}
+</code></pre>
+<h1 id="2-filesnewdirectorystream">2. Files.newDirectoryStream</h1>
+<blockquote>
+<p>类: java.nio.file.Files</p>
+</blockquote>
+<p>函数声明:<br>
+<code>public static DirectoryStream&lt;Path&gt; newDirectoryStream​(Path dir) throws IOException</code></p>
+<blockquote>
+<p>第二个参数代表glob模式,即匹配项.</p>
+</blockquote>
+<p><code>static DirectoryStream&lt;Path&gt; newDirectoryStream​(Path dir, String glob)</code></p>
+<p><strong>Glob模式</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">模式</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">示 例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>*</code></td>
+<td style="text-align:left">匹配路径组成部分中0个或多个字符</td>
+<td style="text-align:left"><code>*.java</code> 匹配所有的java文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>**</code></td>
+<td style="text-align:left">匹配跨目录边界的0个或多个字符</td>
+<td style="text-align:left"><code>**.java</code>匹配在所有子目录的java文件</td>
+</tr>
+<tr>
+<td style="text-align:center">？</td>
+<td style="text-align:left">匹配一个字符</td>
+<td style="text-align:left"><code>????.java</code> 匹配四个字符的java文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>[...]</code></td>
+<td style="text-align:left">匹配一个字符集合</td>
+<td style="text-align:left">正则表达式</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>{...}</code></td>
+<td style="text-align:left">匹配由逗号隔开的多个可选项之一</td>
+<td style="text-align:left"><code>*.{java,class}</code>匹配所有的java文件和class文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\</code></td>
+<td style="text-align:left">转义上述字符和\字符</td>
+<td style="text-align:left"><code>\\\\匹配\</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>static DirectoryStream&lt;Path&gt; newDirectoryStream​(Path dir, DirectoryStream.Filter&lt;? super Path&gt; filter)</code></p>
+<p>作用:遍历特定目录,生成一个目录流,DirectoryStream是一个单独的类,不是继承自Stream&lt;?&gt;,结果中只包含当前目录下的Path.</p>
+<h1 id="3-fileswalk">3. Files.walk</h1>
+<blockquote>
+<p>类： java.nio.file.Files</p>
+</blockquote>
+<p>函数声明：<br>
+<code>static Stream&lt;Path&gt; walk​(Path start, int maxDepth, FileVisitOption... options)</code></p>
+<p>其中maxDepth可以控制访问的深度。<br>
+FileVisitOption的枚举值：FOLLOW_LINKS ,也可以用FileVisitOption.valueOf(String option)生成。</p>
+<p>作用：会产生一个可以遍历目录中左右子目录的Stream<Path>对象。</p>
+<h1 id="4-fileswalkfiletree">4. Files.walkFileTree</h1>
+<blockquote>
+<p>类 ： java.nio.file.Files</p>
+</blockquote>
+<p>函数声明：<br>
+<code>public static Path walkFileTree​(Path start, FileVisitor&lt;? super Path&gt; visitor) throws IOException</code></p>
+<p><strong>SimpleFileVisitor</strong>类实现了FileVisitor&lt;? extends visitor&gt;接口。</p>
+<p>作用：访问某个目录的所有子孙成员，并向其换第一个FileVisitor&lt;&gt;类型的对象，这个对象会得到如下通知：</p>
+<ul>
+<li>
+<p>遇到一个文件或目录时：</p>
+<p><code>FileVisitResult visitFile(Path path,BasicFileAttributes attrs)</code></p>
+</li>
+<li>
+<p>在一个目录被处理后：</p>
+<p><code>FileVisitResult postVisitDirectory(Path path,IOException e)</code></p>
+</li>
+<li>
+<p>在一个目录被处理前：</p>
+<p><code>FileVisitResult preVisitDirectory(Path path,IOException e)</code></p>
+</li>
+<li>
+<p>试图访问文件或者目录时发生错误：</p>
+<p><code>FileVisitResult visitFileFailed(Path path,IOException e)</code></p>
+</li>
+</ul>
+<p>对每种情况，都可以制定实行下面的操作,并通过返回值的方式返回：</p>
+<ul>
+<li>继续访问下一个文件：FileVisitResult.CONTINUE</li>
+<li>继续访问，但不访问该目录下的任何一项：FileVisitResult.SKIP_SUBTREE</li>
+<li>继续访问，但不再访问该文件或目录的兄弟文件或目录：FileVisitResult.SKIP_SIBLINGS</li>
+<li>终止访问，FileVisitResult.TERMINATE</li>
+</ul>
+<p>在使用时，要重载这些方法。</p>
+<blockquote>
+<p>例子：访问所有内容</p>
+</blockquote>
+<pre><code class="language-java">
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+
+public class WalkTreeTest {
+    public static void main(String[] args) throws IOException {
+        Files.walkFileTree (Paths.get(&quot;D:\\Java&quot;),new SimpleFileVisitor&lt;Path&gt; (){
+            //遇到一个文件前
+            @Override
+            public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes attrs){
+                System.out.println (path);
+                return FileVisitResult.CONTINUE;
+            }
+            //遇到一个文件后
+            @Override
+            public FileVisitResult postVisitDirectory(Path path,IOException e){
+                return FileVisitResult.CONTINUE;
+            }
+            //访问文件失败,跳过
+            @Override
+            public FileVisitResult visitFileFailed(Path path,IOException e){
+                return FileVisitResult.SKIP_SUBTREE;
+            }
+        });
+
+    }
+}
+</code></pre>
+<blockquote>
+<p>例子：删除文件夹及所有子项</p>
+</blockquote>
+<pre><code class="language-java">import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.stream.Stream;
+
+public class DeleteDirectory {
+    public static void main(String[] args) throws IOException {
+        Files.exists (Paths.get (&quot;1/2/3/4/5/6/7&quot;));
+        Files.deleteIfExists (Paths.get (&quot;1/2/3/4/5/6/7&quot;));
+        Files.createDirectories (Paths.get (&quot;1/2/3/4/5/6/7&quot;));
+//        try(DirectoryStream&lt;Path&gt; directoryStream = Files.newDirectoryStream (Paths.get (&quot;1&quot;))){
+//            directoryStream.forEach (x -&gt; System.out.println (&quot;创建目录:&quot; + x.toString () + &quot;成功.&quot;));
+//        }
+        try(Stream&lt;Path&gt; stream = Files.walk (Paths.get (&quot;1&quot;))){
+            stream.forEach (x -&gt; System.out.println (&quot;目录&quot; + x + &quot;已被创建.&quot;));
+        }
+        System.out.println (&quot;下面开始删除目录.&quot;);
+        Files.walkFileTree (Paths.get (&quot;1&quot;),new SimpleFileVisitor&lt;&gt; (){
+            @Override
+            public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                Files.deleteIfExists (path);
+                System.out.println (path + &quot;已被删除.&quot;);
+                return FileVisitResult.CONTINUE;
+            }
+            @Override
+            public FileVisitResult postVisitDirectory(Path path,IOException e) throws IOException{
+                if (e != null)
+                    throw e;
+                Files.deleteIfExists (path);
+                System.out.println (path + &quot;已被删除.&quot;);
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
+}
+</code></pre>
+
+          </div>
+          
+        </div>
+        
+          <div class="w-full md:w-1/3">
+            <div class="mt-6 md:pl-8">
+              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
+              <div class="text-lg mb-6">2019-11-12</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
+              <div class="mb-6">
+                
+                  <a href="https://kilric.github.io/tag/java" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">java</a>
+                
+              </div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
+              <div class="text-lg mb-6">5 min read</div>
+              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
+              <div class="border-b border-gray-400">
+                
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-dao" class="text-lg hover:underline my-2 inline-block">JDBC-Dao模块化思想</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+        
+        <div class="border-t border-gray-400 py-6">
+          <a href="https://kilric.github.io/post/jdbc-pstmt" class="text-lg hover:underline my-2 inline-block">JDBC-PreparedStatement的使用</a>
+        </div>
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
+</div>
+    </div>
+  </div>
+  <script>
+    Prism.highlightAll()
+  </script>
+</body>
+</html>
