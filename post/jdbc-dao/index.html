@@ -1,98 +1,64 @@
-<html lang="en">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title></title>
-<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
-<script src="https://kilric.github.io/media/script.js"></script>
+<!DOCTYPE html>
+<html>
+        <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title>JDBC-Dao模块化思想 | Kilric&#39;s  Blog</title>
+        <link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1423691_1fcfxbwa79n.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
 
-    
-
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title></title>
-<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
-<script src="https://kilric.github.io/media/script.js"></script>
-
-    
-
-  <script src="https://kilric.github.io/media/prism.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-</head>
-<body>
-  <div class="antialiased">
-    <div class="max-w-5xl mx-auto px-6 md:px-8">
-      <div class="flex justify-between items-center mt-10">
-  <h1 class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-900 font-medium md:font-normal leading-none">
-    <a href="https://kilric.github.io">Kilric&#39;s  Blog</a>
-  </h1>
-  <div class="block lg:hidden" id="thumb-menu">
-    <button id="thumb-open" type="button" class="block">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6H22V7H2V6ZM2 12H22V13H2V12ZM22 18H2V19H22V18Z" class="fill-current text-gray-900"></path></svg>
-    </button>
-    <button id="thumb-close" type="button" class="hidden">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L20 20M20 4L4 20" class="" stroke="#1A202C"></path></svg>
-    </button>
-  </div>
-</div>
-<div id="nav-list" class="lg:block hidden">
-  <div class="w-full block lg:flex lg:justify-between lg:border-b lg:border-gray-400 mt-10 text-gray-700 font-medium lg:text-lg">
-    <div class="lg:flex -mb-px">
-      
-        
-          <a href="/" class="nav-link">首页</a>
-        
-      
-        
-          <a href="/archives" class="nav-link">归档</a>
-        
-      
-        
-          <a href="/tags" class="nav-link">标签</a>
-        
-      
-        
-          <a href="/post/about" class="nav-link">关于</a>
-        
-      
-    </div>
-    <div class="lg:flex">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-      <a href="https://kilric.github.io/atom.xml" class="block mt-6 lg:mt-0 lg:ml-8 flex align-center hover:text-gray-900" target="_blank">
-        <div>RSS</div>
-        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 -mt-px"><path d="M16.5 13V18.5H6.5V8.5H12" stroke="#4A5568"></path> <path d="M10 15L18.5 6.5" stroke="#4A5568"></path> <path d="M14 6.5H18.5V11" stroke="#4A5568"></path></svg>
-      </a>
-    </div>
-  </div>
-</div>
-      <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
-        <div class="w-full md:w-2/3 mt-6">
-          <h1 class="text-4xl">JDBC-Dao模块化思想</h1>
-          
-          <div class="mt-6 lg:mt-10 post-content">
-            <h1 id="1-dao抽象类">1. DAO（抽象类）</h1>
+    </head>
+    <body>
+              <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://kilric.github.io">Kilric&#39;s  Blog</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">专注于IT互联网，包括但不限于C/C++,Golang,Java,Web技术,大数据与云计算。</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">归档</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">标签</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">JDBC-Dao模块化思想</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2019-11-12 20:28:04">2019-11-12 / 7 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h1 id="1-dao抽象类">1. DAO（抽象类）</h1>
 <ul>
 <li>DAO：Data Access Object访问数据信息的类和接口，包括了对数据的CRUD（Create、Retrival、 Update、Delete），而不包含任何业务相关的信息。</li>
 <li>作用：为了实现功能的模块化，更有利于代码的维护和升级。</li>
@@ -397,195 +363,87 @@ public class StudentDAOImpl extends DAO implements StudentDAO {
 	}
 }
 </code></pre>
-
-          </div>
-          
-        </div>
-        
-          <div class="w-full md:w-1/3">
-            <div class="mt-6 md:pl-8">
-              <h4 class="text-base font-thin text-gray-700 mb-2">发布时间</h4>
-              <div class="text-lg mb-6">2019-11-12</div>
-              <h4 class="text-base font-thin text-gray-700 mb-2">标签</h4>
-              <div class="mb-6">
-                
-                  <a href="https://kilric.github.io/tag/jdbc" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">jdbc</a>
-                
-                  <a href="https://kilric.github.io/tag/java" class="py-1 px-4 border-gray-300 border text-sm inline-block text-gray-700 hover:text-gray-900 rounded mr-2 mb-2">java</a>
-                
-              </div>
-              <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
-              <div class="text-lg mb-6">7 min read</div>
-              <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
-              <div class="border-b border-gray-400">
-                
-
-  
-    
-      
-        
-        <div class="border-t border-gray-400 py-6">
-          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
-        </div>
-      
-    
-      
-        
-        <div class="border-t border-gray-400 py-6">
-          <a href="https://kilric.github.io/post/jdbc-connpool" class="text-lg hover:underline my-2 inline-block">JDBC-数据库连接池和DBUtils的使用</a>
-        </div>
-      
-    
-  
-
-  
-
-  
-    
-      
-        
-        <div class="border-t border-gray-400 py-6">
-          <a href="https://kilric.github.io/post/jdbc-pstmt" class="text-lg hover:underline my-2 inline-block">JDBC-PreparedStatement的使用</a>
-        </div>
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-  
-    
-      
-    
-      
-    
-  
-
-
-              </div>
-            </div>
-          </div>
-        
-      </div>
-      <div class="footer border-gray-400 border-t pt-6 mt-6 sm:mt-8 md:mt-10 mb-20 text-gray-700 text-sm sm:text-base lg:text-lg">
-  Powered by <a href="https://kilric.com" target="_blank">Kilric</a>
 </div>
-    </div>
-  </div>
-  <script>
-    Prism.highlightAll()
-  </script>
-</body>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://kilric.github.io/post/jdbc-connpool">JDBC-数据库连接池和DBUtils的使用</a></div></div>
+                                        
+
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://kilric.github.io/post/jdbc-pstmt">JDBC-PreparedStatement的使用</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://kilric.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+
+
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                                </article>
+
+                                    
+                        </div>
+                      </div>
+    
+                
+
+              </div>
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                  <div class="copyright">
+                      <p>Powered by <a href="https://kilric.com" target="_blank">Kilric</a> <br/> Theme <a href="https://github.com/alterfang/gridea-theme-song/">宋</a> by <a href="https://shanbu.fun/">山卜方</a> </p>
+                  </div>
+                  
+              </footer>
+    </body>
 </html>
