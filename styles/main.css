@@ -2679,8 +2679,8 @@ a {
   transition: all 0.5s;
 }
 .archives:hover {
-  background-color: #cae977;
-  color: #FFF;
+  background-color: #efe3f3;
+  color: #e62d2d;
 }
 .archives-title a {
   font-size: 20px;
@@ -2689,7 +2689,7 @@ a {
   transition: all 0.5s;
 }
 .archives:hover a {
-  color: #FFF;
+  color: #6668f7;
 }
 /* 内容页 */
 .post {
