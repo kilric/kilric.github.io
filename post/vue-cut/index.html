@@ -3,7 +3,7 @@
         <head>
         <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
         <meta charset="utf-8">
-        <title>PostgreSQL基础 | Kilric&#39;s  Blog</title>
+        <title>Vue购物车小案例 | Kilric&#39;s  Blog</title>
         <link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_1423691_1fcfxbwa79n.css">
         <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -56,116 +56,166 @@
                 <div class="mdui-row">
                         <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
                                 <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="post-title  mdui-m-b-1">PostgreSQL基础</div>
-                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2019-11-12 20:00:06">2019-11-12 / 2 min read</div>
-                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><pre><code>						postgresql基本命令
+                                    <div class="post-title  mdui-m-b-1">Vue购物车小案例</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2019-11-18 22:44:13">2019-11-18 / 4 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><h1 id="截图">截图</h1>
+<p><img src="https://kilric.github.io/post-images/1574088490534.png" alt=""><br>
+<img src="https://kilric.github.io/post-images/1574088495336.png" alt=""></p>
+<h1 id="代码">代码</h1>
+<ul>
+<li>html</li>
+</ul>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+      &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=UTF-8&quot;&gt;
+      &lt;title&gt;&lt;/title&gt;
+      &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+			
+        &lt;div id=&quot;app&quot;&gt;
+		  &lt;div v-if=&quot;books.length!=0&quot;&gt;
+            &lt;table&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;&lt;/th&gt;
+                        &lt;th&gt;书籍名称&lt;/th&gt;
+                        &lt;th&gt;出版日期&lt;/th&gt;
+                        &lt;th&gt;价格&lt;/th&gt;
+                        &lt;th&gt;购买数量&lt;/th&gt;
+                        &lt;th&gt;操作&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+				&lt;tbody &gt;
+					&lt;tr v-for=&quot;(item,index) in books&quot;&gt;
+						&lt;td&gt;{{item.id}}&lt;/td&gt;
+						&lt;td&gt;{{item.name}}&lt;/td&gt;
+						&lt;td&gt;{{item.date}}&lt;/td&gt;
+								      &lt;!-- &lt;td&gt;{{item.price.toFixed(2)}}&lt;/td&gt;  保留两位小数  --&gt;
+											&lt;!-- &lt;td&gt;{{getFinalPrice(item.price)}}&lt;/td&gt; --&gt; &lt;!-- 方法实现 --&gt;
+						&lt;td&gt;{{item.price | finalPrice}}&lt;/td&gt;   &lt;!-- 过滤器 --&gt;
+						&lt;td&gt;
+							&lt;button @click=&quot;decrement(index)&quot; :disabled=&quot;item.count &lt;= 1&quot;&gt;-&lt;/button&gt;
+								{{item.count}}
+							&lt;button @click=&quot;increment(index)&quot;&gt;+&lt;/button&gt;
+						&lt;/td&gt;
+						&lt;td&gt;
+							&lt;button @click=&quot;removeHandle(index)&quot; &gt;移除&lt;/button&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+				&lt;/tbody&gt;
+            &lt;/table&gt;
+			&lt;h2&gt;总价格：{{totalPrice | finalPrice}}&lt;/h2&gt;
+			&lt;/div&gt;
+			&lt;div v-else&gt;
+				购物车为空
+			&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;script src=&quot;../js/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;index.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
-<h1 id="1-进入数据库">1. 进入数据库</h1>
 <ul>
-<li>linux</li>
+<li>css</li>
 </ul>
-<p><code>sudo su postgres</code> 切换到数据库用户，postgresql默认会创建postgresql用户用来管理postgresql数据库，切换成功后会自动进入postgresql的命令行操作界面。然后输入<code>psql</code>进入与用户名同名的数据库,或者 <code>psql dbname</code> 进入特定的数据库.</p>
+<pre><code class="language-css">table {
+    border: 1px solid #e9e9e9;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th,td {
+    padding: 8px 16px;
+    border: 1px solid #e9e9e9;
+    text-align: left;
+}
+
+th {
+    background-color: #f7f7f7;
+    color: black;
+    font-weight: 600;
+}
+</code></pre>
 <ul>
-<li>Windows</li>
+<li>js</li>
 </ul>
-<p>安装成功后悔安装一个SQL Shell(psql)，相当于Linux下切换到了postgres用户，进去后按回车选择默认主机，端口，用户，密码是安装时设置的密码。</p>
-<p>输入密码后就进入了postgresql命令行操作界面。</p>
-<h1 id="2-命令行下的命令">2. 命令行下的命令</h1>
-<ul>
-<li><strong>help</strong></li>
-</ul>
-<p>输入help显示帮助信息，有常用的命令及其作用。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">\copyright</td>
-<td style="text-align:center">显示发行条款</td>
-</tr>
-<tr>
-<td style="text-align:center">\h</td>
-<td style="text-align:center">显示 SQL 命令的说明</td>
-</tr>
-<tr>
-<td style="text-align:center">?</td>
-<td style="text-align:center">显示 pgsql 命令的说明</td>
-</tr>
-<tr>
-<td style="text-align:center">\g</td>
-<td style="text-align:center">或者以分号(;)结尾以执行查询</td>
-</tr>
-<tr>
-<td style="text-align:center">\q</td>
-<td style="text-align:center">退出</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><strong>\l</strong></li>
-</ul>
-<p>查看存在的数据库。</p>
-<ul>
-<li><strong>createdb <dbname></strong></li>
-</ul>
-<p>创建名为dbname的数据库。</p>
-<ul>
-<li><strong>dropdb <dbname></strong></li>
-</ul>
-<p>删除某个数据库。</p>
-<ul>
-<li><strong>psql <dbname></strong></li>
-</ul>
-<p>激活数据库。</p>
-<ul>
-<li><strong>\c <dbname></strong></li>
-</ul>
-<p>选择数据库/连接到某个特定的数据库。</p>
-<ul>
-<li><strong>\d</strong>  和  <strong>\dt</strong></li>
-</ul>
-<p>列出当前数据库中的表/关系模式。</p>
-<ul>
-<li><strong>\d <tablename></strong></li>
-</ul>
-<p>列出当前表的结构。</p>
-<ul>
-<li><strong>\dv</strong></li>
-</ul>
-<p>列出视图、</p>
-<ul>
-<li><strong>\dv <viewname></strong></li>
-</ul>
-<p>查看视图的结构。</p>
-<ul>
-<li><strong>\x</strong></li>
-</ul>
-<p>开启/关闭 扩展显示。</p>
-<ul>
-<li><strong>\t</strong></li>
-</ul>
-<p>开启/关闭 只显示元组。</p>
-<ul>
-<li><strong>\q</strong></li>
-</ul>
-<p>退出。</p>
-<ul>
-<li><strong>q</strong></li>
-</ul>
-<p>退出帮助信息页面。</p>
+<pre><code class="language-javascript">const app = new Vue({
+    el : '#app',
+    data : {
+        books : [
+            {
+                id : 1,
+                name : &quot;算法导论&quot;,
+                date : &quot;2006-9&quot;,
+                price : 85.00,
+                count : 1
+            },
+            {
+                id : 2,
+                name : &quot;Unix编程艺术&quot;,
+                date : &quot;2007-2&quot;,
+                price : 59.00,
+                count : 1
+            },
+            {
+                id : 3,
+                name : &quot;编程珠玑&quot;,
+                date : &quot;2007-2&quot;,
+                price : 49.00,
+                count : 1
+            },
+            {
+                id : 4,
+                name : &quot;代码大全&quot;,
+                date : &quot;2010-2&quot;,
+                price : 120.00,
+                count : 1
+            }
+        ]
+    },
+		methods:{
+			getFinalPrice(price){
+				return '¥ ' + price.toFixed(2);
+			},
+			decrement(index){
+				if(this.books[index].count&gt;1)
+					this.books[index].count--;
+			},
+			increment(index){
+				this.books[index].count++;
+			},
+			removeHandle(index){
+				this.books.splice(index,1);
+			}
+		},
+		filters:{
+			finalPrice(price){
+				return '¥ ' + price.toFixed(2);
+			}
+		},
+		computed :{
+			totalPrice(){
+				let total = 0;
+				for(book of this.books){
+					total+=book.price+book.count;
+				}
+				return total;
+			}
+		}
+		
+});
+</code></pre>
 </div>
                                     <div class="mdui-divider mdui-m-b-2"></div>
                                     <div class="mdui-row-xs-2 post-fenye">
                                        
-                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://kilric.github.io/post/linux-base">必须掌握的Linux使用基础命令</a></div></div>
+                                        <div class="mdui-col"> </div>
                                         
 
                                         
-                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://kilric.github.io/post/reflect">Java反射总结</a></div> </div>
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://kilric.github.io/post/vue-base">Vue的基础模板语法</a></div> </div>
                                        
                                       </div>
                                    

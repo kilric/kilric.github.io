@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+        <head>
+        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <meta charset="utf-8">
+        <title>Vue的基础模板语法 | Kilric&#39;s  Blog</title>
+        <link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
+        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1423691_1fcfxbwa79n.css">
+        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+
+    </head>
+    <body>
+              <header class="header mdui-m-b-5">      
+            <div class="container  ">
+                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://kilric.github.io">Kilric&#39;s  Blog</a></div>
+                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">专注于IT互联网，包括但不限于C/C++,Golang,Java,Web技术,大数据与云计算。</div>
+           
+            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
+                   
+                            <li><a href="/">首页</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/archives">归档</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/tags">标签</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                            <li><a href="/post/about">关于</a>
+                                <span class="nav-style top"></span>
+                                <span class="nav-style bottom"></span>
+                                <span class="nav-style left"></span>
+                                <span class="nav-style right"></span>
+                                </li>
+                    
+                  </nav>
+                </div>
+        </header>
+        <div class="mdui-container ">
+                <div class="mdui-row">
+                        <div class="mdui-col-md-8 mdui-col-offset-md-2 ">
+                                <article class="mdui-p-a-2 post animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
+                                    <div class="post-title  mdui-m-b-1">Vue的基础模板语法</div>
+                                    <div class="mdui-typo-body-2 mdui-m-b-2" datetime="2019-11-18 22:42:09">2019-11-18 / 16 min read</div>
+                                    <div class="mdui-m-b-2 mdui-typo post-neirong"><blockquote>
+<p>Vue.js 使用了基于 HTML 的模版语法，允许开发者声明式地将 DOM 绑定至底层 Vue 实例的数据。<br>
+Vue.js 的核心是一个允许你采用简洁的模板语法来声明式的将数据渲染进 DOM 的系统。<br>
+结合响应系统，在应用状态改变时， Vue 能够智能地计算出重新渲染组件的最小代价并应用到 DOM 操作上。</p>
+</blockquote>
+<h1 id="基本指令">基本指令：</h1>
+<h2 id="插值">插值</h2>
+<h3 id="文本">文本：</h3>
+<ul>
+<li>mustache语法</li>
+</ul>
+<p>利用mustache语法，即双大括号的的表示形式，{{表达式}}，表达式是js表达式或js变量等。</p>
+<pre><code class="language-javascript">&lt;body&gt;
+	&lt;div id=&quot;app&quot;&gt;
+		&lt;h1&gt;{{msg}}&lt;/h1&gt;  &lt;!-- mustache语法 --&gt;
+	&lt;/div&gt;
+	&lt;script type=&quot;text/javascript&quot;&gt;
+    let app = new Vue({
+      el: &quot;#app&quot;,
+      data: {
+        msg: &quot;你好啊！&quot;,
+      }
+    })
+	&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<ul>
+<li>v-text</li>
+</ul>
+<p>v-text和mustache语法作用类似，vue会自动的把v-text绑定的变量的值写入到该标签text区域内。</p>
+<pre><code class="language-javascript">&lt;body&gt;
+	&lt;div id=&quot;app&quot;&gt;
+		&lt;h1&gt;{{msg}}&lt;/h1&gt;  &lt;!-- mustache语法 --&gt;
+		&lt;p v-text=&quot;msg&quot;&gt;&lt;/p&gt;  &lt;!-- 和mustache语法相同 --&gt;
+		&lt;!-- h1和p的内容一致 --&gt;
+	&lt;/div&gt;
+	&lt;script type=&quot;text/javascript&quot;&gt;
+    let app = new Vue({
+      el: &quot;#app&quot;,
+      data: {
+        msg: &quot;你好啊！&quot;,
+      }
+    })
+	&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<ul>
+<li>v-once</li>
+</ul>
+<p>只渲染元素和组件一次，随后的渲染，使用了此指令的元素/组件及其所有的子节点，都会当作静态内容并跳过，这可以用于优化更新性能。</p>
+<pre><code class="language-javascript">&lt;div id=&quot;app&quot;&gt;
+	&lt;p v-once&gt;{{msg}}&lt;/p&gt;  //msg不会改变
+	&lt;p&gt;{{msg}}&lt;/p&gt;
+	&lt;p&gt;
+		&lt;input type=&quot;text&quot; v-model = &quot;msg&quot;&gt;
+	&lt;/p&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+		let app = new Vue({
+			el : '#app',
+			data : {
+				msg : &quot;hello&quot;
+			}
+		});
+&lt;/script&gt;
+</code></pre>
+<ul>
+<li>v-pre</li>
+</ul>
+<p>原样输出,不会解析渲染。</p>
+<ul>
+<li>v-cloak<br>
+解决文本闪烁问题，即当网速慢的时候，在渲染完毕之前，可能会出现源代码，加一个v-cloak指令就可以杜绝这种现象，当解析完毕后才会显示。</li>
+</ul>
+<h3 id="html">Html</h3>
+<ul>
+<li>v-html</li>
+</ul>
+<p>当数据的值是一个html标签时，如果用mustache语法或者v-text指令，那么会把原始文本显示出来，并不会渲染HTML标签，用v-html就可以解决这个问题，加一个v-html指令，就会把标签渲染出来，达到了动态获取链接或者其他标签的目的。</p>
+<pre><code class="language-javascript">&lt;div id=&quot;app&quot;&gt;
+	&lt;div v-html=&quot;message&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+	new Vue({
+		el: '#app',
+		data: {
+			message: '&lt;h1&gt;Kilric's Blog&lt;/h1&gt;'
+		}
+	})
+&lt;/script&gt;
+</code></pre>
+<h2 id="动态绑定属性">动态绑定属性</h2>
+<ul>
+<li>v-bind</li>
+</ul>
+<p>书写方法：</p>
+<pre><code class="language-html">&lt;div v-bind:class=&quot;&quot;&gt; &lt;/div&gt;  &lt;!-- 原始书写 --&gt;
+&lt;div :class=&quot;&quot;&gt;&lt;/div&gt;       &lt;!--  语法糖 --&gt;
+</code></pre>
+<ul>
+<li>基本使用</li>
+</ul>
+<pre><code class="language-javascript">&lt;img v-bind:src=&quot;imgUrl&quot; alt=&quot;vuejs&quot;&gt;
+&lt;img :src=&quot;imgUrl&quot; alt=&quot;vuejs&quot;&gt;
+</code></pre>
+<ul>
+<li>动态绑定class(对象方法,常用)</li>
+</ul>
+<pre><code class="language-javascript">&lt;h2 :class=&quot;{red:isActived, green:isLine}&quot;&gt;{{message}}&lt;/h2&gt;
+</code></pre>
+<ul>
+<li>动态绑定class（数组方法）</li>
+</ul>
+<pre><code class="language-javascript">&lt;h2 :class=&quot;[class1 ,classa2]&quot;&gt;{{message}}&lt;/h2&gt;
+&lt;h2 :class=&quot;getClassArray()&quot;&gt;{{message}}&lt;/h2&gt;
+</code></pre>
+<p>完整代码：</p>
+<pre><code class="language-javascript">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;app&quot;&gt;
+  &lt;!--先用类green，点击后将green类关闭--&gt;
+  &lt;h2 :class=&quot;getClasses()&quot;&gt;{{message}}&lt;/h2&gt;  &lt;!-- 调用方法--&gt;
+  &lt;button @click=&quot;btnClk&quot;&gt;切换&lt;/button&gt;
+&lt;/div&gt;
+&lt;script src=&quot;../js/vue.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  let app = new Vue({
+    el: &quot;#app&quot;,
+    data: {
+      msg: &quot;你好啊！&quot;,
+      url: '&lt;a href=&quot;https://www.baidu.com&quot;&gt;百度一下&lt;/a&gt;',
+      message: &quot;Hello,VueJs&quot;,
+      isActived: true,
+      isLine:true
+    },
+    methods:{
+      btnClk:function(){
+        this.isLine=!this.isLine;
+      },
+      getClasses:function () {
+        return {red:this.isActived, green:this.isLine};
+      }
+    }
+  })
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2 id="事件监听">事件监听</h2>
+<ul>
+<li>v-on<br>
+书写方法：</li>
+</ul>
+<pre><code class="language-html">&lt;button v-on:click=&quot;onClick&quot;&gt; &lt;/button&gt;
+&lt;button @click=&quot;onClick&quot;&gt; &lt;/button&gt;  &lt;!-- 语法糖 -- &gt;
+</code></pre>
+<ul>
+<li>绑定单个事件</li>
+</ul>
+<pre><code class="language-html">&lt;!-- body  --&gt;
+&lt;div id=&quot;app&quot;&gt;
+&lt;button v-on:click=&quot;onClick&quot;&gt;点我&lt;/button&gt;
+&lt;/div&gt;
+
+//script
+var app = new Vue({
+el : '#app',
+methods : {
+	onClick : function(){
+		console.log(&quot;clicked&quot;);
+		},  
+	}
+})
+</code></pre>
+<ul>
+<li>绑定多个事件</li>
+</ul>
+<pre><code class="language-html">&lt;button v-on='{mouseenter:onEnter,mouseleave:onOut}' v-on:click=&quot;onClick&quot;&gt;点我&lt;/button&gt;
+
+methods : {
+	onClick : function(){
+			console.log(&quot;clicked&quot;);
+	},
+	onEnter : function(){
+			console.log(&quot;mouseenter&quot;);
+	},
+	onOut : function(){
+			console.log(&quot;mouseout&quot;);
+	},
+}
+</code></pre>
+<ul>
+<li>为form绑定提交事件</li>
+</ul>
+<pre><code class="language-html">&lt;form v-on:submit=&quot;onSubmit&quot;&gt;
+	&lt;input type=&quot;text&quot;&gt;&lt;br/&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+
+methods :{
+	onSubmit : function(){
+		console.log(&quot;submitted&quot;);
+	}
+}
+</code></pre>
+<p>由于每次提交页面都会刷新，所以在控制台看不到输出。但是可以避免。</p>
+<p>方法一：</p>
+<p>为onSubmit传递参数$event,然后调用事件的preveentDefault()方法，阻止默认的提交刷新行为。</p>
+<pre><code class="language-html">&lt;form v-on:submit=&quot;onSubmit($event)&quot;&gt;
+
+methods :{
+	onSubmit: function(e) {
+		e.preventDefault();
+		console.log(&quot;submitted&quot;);
+	},
+}
+</code></pre>
+<p>方法二：</p>
+<p>调用prevent修饰符。</p>
+<pre><code class="language-html">&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;
+</code></pre>
+<hr>
+<p><strong>v-on的修饰符：</strong></p>
+<ul>
+<li>.stop:阻止事件冒泡</li>
+</ul>
+<pre><code class="language-html">&lt;div @click=&quot;getTitle&quot;&gt;
+    &lt;button @click=&quot;getBtn&quot;&gt;按钮&lt;/button&gt;
+    &lt;button @click.stop=&quot;getBtn2&quot;&gt;按钮2&lt;/button&gt;
+&lt;/div&gt;
+
+</code></pre>
+<ul>
+<li>.prevent：阻止默认行为(如前面的阻止刷新)</li>
+</ul>
+<pre><code class="language-html">&lt;form action=&quot;Baidu&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot; @click.prevent=&quot;getSubmit&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<ul>
+<li>.once：事件只触发一次</li>
+</ul>
+<pre><code class="language-html">&lt;button @click=&quot;getOnce&quot;&gt;按钮&lt;/button&gt;
+&lt;button @click.once=&quot;getOnce&quot;&gt;按钮2&lt;/button&gt;
+</code></pre>
+<ul>
+<li>.enter:监听enter(确认)键的情况-------（按下\弹起）</li>
+</ul>
+<pre><code class="language-html">&lt;input type=&quot;text&quot; @keyup=&quot;getKeyup&quot;&gt;
+&lt;input type=&quot;text&quot; @keyup.enter=&quot;getKeyup&quot;&gt;
+</code></pre>
+<p>监听其他键：</p>
+<ul>
+<li>delete/backspace : 	<code>@keyup.delete=&quot;&quot;</code></li>
+</ul>
+<p>也可以用代号来监听：</p>
+<figure data-type="image" tabindex="1"><img src="https://kilric.github.io/post-images/1574088226444.jpg" alt=""></figure>
+<hr>
+<h2 id="显示">显示</h2>
+<ul>
+<li>v-if和v-else</li>
+</ul>
+<pre><code>&lt;h2 v-if=&quot;true&quot;&gt;v-if&lt;/h2&gt;
+&lt;h2 v-else&gt;v-else&lt;/h2&gt;
+
+</code></pre>
+<blockquote>
+<p>v-if为真 时，显示v-if的内容，否则显示v-else的内容.</p>
+</blockquote>
+<ul>
+<li>v-show</li>
+</ul>
+<pre><code class="language-html">&lt;h2 v-show=&quot;true&quot;&gt;显示我&lt;/h2&gt;
+</code></pre>
+<pre><code class="language-html">&lt;body&gt;
+	&lt;div id=&quot;app&quot;&gt;
+		&lt;h2 v-if=&quot;isShow&quot;&gt;{{msg}}&lt;/h2&gt;  &lt;!-- isShow为false的时候删除h2，wei true的时候重新创建 --&gt;
+		&lt;h2 v-show=&quot;isShow&quot;&gt;{{msg}}&lt;/h2&gt;  &lt;!-- isShow为false的时候把display改为none --&gt;
+	&lt;/div&gt;
+	&lt;script type=&quot;text/javascript&quot; src=&quot;js/vue.js&quot;&gt;	&lt;/script&gt;
+	&lt;script type=&quot;text/javascript&quot;&gt;
+		const app = new Vue({
+			el:'#app',
+			data:{
+				msg : &quot;你好!&quot;,
+				isShow: false
+			}
+		})
+			
+	&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<ul>
+<li>v-if和v-show的区别</li>
+</ul>
+<p>v-if和v-show的作用都把内容显示和隐藏，不同的是，v-if在元素隐藏的时候，是把整个DOM元素删除。v-show是在DOM元素上添加一个样式，把内容隐藏起来。</p>
+<ul>
+<li>input的复用问题</li>
+</ul>
+<p>当切换方式发生改变的时候，输入框里面的内容不会清空 .</p>
+<figure data-type="image" tabindex="2"><img src="https://kilric.github.io/post-images/1574088246339.png" alt=""></figure>
+<p>这是因为VUE后台处理的原因。</p>
+<ul>
+<li>
+<p>因为邮箱登录和密码登录不能同时出现.</p>
+</li>
+<li>
+<p>在内容渲染到页面的时候，VUE会创建一个虚拟DOM.</p>
+</li>
+</ul>
+<p>所以当邮箱登录和密码登录相互切换的时候，因为组成他们的DOM元素是一样的，为了提升性能，VUE后台作出处理，当DOM元素相同时，它会复用之前的那个DOM，所以导致切换登录方式后，input里面的内容不会改变。其实他们用的就是同一个input。</p>
+<p><strong>解决：</strong></p>
+<pre><code class="language-html">&lt;label for=&quot;user&quot;&gt;密码登录&lt;/label&gt;
+&lt;input type=&quot;text&quot; id=&quot;user&quot; placeholder=&quot;请输入你的QQ&quot; key=&quot;a&quot;&gt;
+</code></pre>
+<blockquote>
+<p>在input里面加上一个key---唯一标识,当两个input里面的key相同时，input就会复用，反之就不会复用.</p>
+</blockquote>
+<h2 id="遍历">遍历</h2>
+<ul>
+<li>v-for遍历数组和对象</li>
+</ul>
+<h3 id="遍历数组">遍历数组：</h3>
+<pre><code class="language-html">	&lt;body&gt;
+		&lt;div id=&quot;app&quot;&gt;
+			&lt;ul&gt;
+				&lt;li v-for=&quot;item in movies&quot;  :key=&quot;item&quot;&gt;{{item}}&lt;/li&gt;
+			&lt;/ul&gt;
+			&lt;ul&gt;
+				&lt;li v-for=&quot;(item,index) in movies&quot;&gt;{{index+1}}: {{item}}&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;js/vue.js&quot;&gt;&lt;/script&gt;
+		&lt;script type=&quot;text/javascript&quot;&gt;
+			const app = new Vue({
+				el:&quot;#app&quot;,
+				data:{
+					movies:[&quot;金克丝&quot;,&quot;卢锡安&quot;,&quot;亚索&quot;,&quot;赫卡里姆&quot;]
+				}
+			})
+		&lt;/script&gt;
+	&lt;/body&gt;
+</code></pre>
+<h3 id="遍历对象">遍历对象</h3>
+<pre><code class="language-html">	&lt;body&gt;
+		&lt;div id=&quot;app&quot;&gt;
+			&lt;ul&gt;
+				&lt;!-- v-for最好加一个key，为了更好地复用组件 --&gt;
+				&lt;li v-for=&quot;(value,key,index) in info&quot;   v-bind=&quot;value&quot;&gt;{{index+1}}:{{key}}_{{value}} &lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;js/vue.js&quot;&gt;&lt;/script&gt;
+		&lt;script type=&quot;text/javascript&quot;&gt;
+			const app = new Vue({
+				el:&quot;#app&quot;,
+				data:{
+					info :{
+						name : &quot;kilric&quot;,
+						age : 23,
+						height : 170
+					}
+				}
+			})
+		&lt;/script&gt;
+	&lt;/body&gt;
+</code></pre>
+<h3 id="总结">总结</h3>
+<pre><code class="language-html">&lt;ul&gt;
+		&lt;!-- 遍历1--10 --&gt; 
+		&lt;li v-for=&quot;i in 10&quot;&gt;{{i}}&lt;/li&gt;&lt;br&gt; 
+        &lt;li v-for=&quot;item in array&quot;&gt;{{item}}&lt;/li&gt;&lt;br&gt;
+        &lt;li v-for=&quot;(item,index) in array&quot;&gt;{{item}}--{{index}}&lt;/li&gt;&lt;br&gt;
+        &lt;li v-for=&quot;(value,key,index) in obj&quot;&gt;{{value}}--{{key}}--{{index}}&lt;/li&gt;&lt;br&gt;
+&lt;/ul&gt;
+</code></pre>
+<h2 id="双向数据绑定">双向数据绑定</h2>
+<ul>
+<li>v-model</li>
+</ul>
+<blockquote>
+<p>v-model双向数据绑定的实现原理: v-bind  +   v-on</p>
+</blockquote>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+    &lt;!-- &lt;input type=&quot;text&quot; v-model=&quot;message&quot;&gt;  --&gt;
+    &lt;input type=&quot;text&quot; :value=&quot;message&quot; @input=&quot;message=$event.target.value&quot;&gt;
+    &lt;h2&gt;{{message}}&lt;/h2&gt;
+&lt;/div&gt;
+
+</code></pre>
+<ul>
+<li>v-model 结合radio类型的使用</li>
+</ul>
+<pre><code class="language-html">    &lt;label for=&quot;man&quot;&gt;
+        &lt;input type=&quot;radio&quot; id=&quot;man&quot; value=&quot;男&quot; v-model=&quot;sex&quot;&gt;
+    &lt;/label&gt;
+    &lt;label for=&quot;Wman&quot;&gt;
+        &lt;input type=&quot;radio&quot; id=&quot;Wman&quot; value=&quot;女&quot; v-model=&quot;sex&quot;&gt;
+    &lt;/label&gt;
+    &lt;h2&gt;你选择的性别是：{{sex}}&lt;/h2&gt;
+</code></pre>
+<ul>
+<li>v-model结合checkbox的使用</li>
+</ul>
+<ul>
+<li>单选框</li>
+</ul>
+<pre><code class="language-html">    &lt;!-- checkbox 单选框 --&gt;
+    &lt;label for=&quot;agree&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;agree&quot; v-model=&quot;ischange&quot;&gt;同意协议
+    &lt;/label&gt;
+    &lt;h2&gt;你选择的是:{{ischange}}&lt;/h2&gt;
+    &lt;button :disabled=&quot;!ischange&quot;&gt;下一步&lt;/button&gt;&lt;br&gt;
+</code></pre>
+<ul>
+<li>多选框</li>
+</ul>
+<pre><code class="language-html">    &lt;!-- checkbox 多选框 --&gt;
+    &lt;input type=&quot;checkbox&quot; value=&quot;篮球&quot; v-model=&quot;hobbies&quot;&gt;篮球
+    &lt;input type=&quot;checkbox&quot; value=&quot;足球&quot; v-model=&quot;hobbies&quot;&gt;足球
+    &lt;input type=&quot;checkbox&quot; value=&quot;羽毛球&quot; v-model=&quot;hobbies&quot;&gt;羽毛球
+    &lt;input type=&quot;checkbox&quot; value=&quot;兵乓球&quot; v-model=&quot;hobbies&quot;&gt;兵乓球
+    &lt;input type=&quot;checkbox&quot; value=&quot;排球&quot; v-model=&quot;hobbies&quot;&gt;排球
+    &lt;h2&gt;你的爱好是：{{hobbies}}&lt;/h2&gt;
+</code></pre>
+<ul>
+<li>v-model结合select的使用</li>
+</ul>
+<ul>
+<li>单选</li>
+</ul>
+<pre><code class="language-html">    &lt;!-- select  单选 --&gt;
+    &lt;select name=&quot;&quot; id=&quot;&quot; v-model=&quot;fruit&quot;&gt;
+        &lt;option value=&quot;西瓜&quot;&gt;西瓜&lt;/option&gt;
+        &lt;option value=&quot;苹果&quot;&gt;苹果&lt;/option&gt;
+        &lt;option value=&quot;香蕉&quot;&gt;香蕉&lt;/option&gt;
+        &lt;option value=&quot;草莓&quot;&gt;草莓&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;h2&gt;你选择的水果是：{{fruit}}&lt;/h2&gt;&lt;br&gt;&lt;br&gt;
+</code></pre>
+<ul>
+<li>多选</li>
+</ul>
+<pre><code class="language-html">    &lt;!-- select  多选 --&gt;
+    &lt;select name=&quot;&quot; id=&quot;&quot; v-model=&quot;fruits&quot; multiple&gt;
+        &lt;option value=&quot;西瓜&quot;&gt;西瓜&lt;/option&gt;
+        &lt;option value=&quot;苹果&quot;&gt;苹果&lt;/option&gt;
+        &lt;option value=&quot;香蕉&quot;&gt;香蕉&lt;/option&gt;
+        &lt;option value=&quot;草莓&quot;&gt;草莓&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;h2&gt;你选择的水果是:{{fruits}}&lt;/h2&gt;
+</code></pre>
+<ul>
+<li>值绑定 ：动态绑定Value的值</li>
+</ul>
+<pre><code class="language-html">    &lt;!-- 值绑定 --&gt;
+    &lt;label :for=&quot;item&quot; v-for=&quot;item in fruitHobbies&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; :id=&quot;item&quot; :value=&quot;item&quot; v-model=&quot;hobbies&quot;&gt;{{item}}
+    &lt;/label&gt;
+
+</code></pre>
+<ul>
+<li>v-model修饰符的使用</li>
+</ul>
+<ul>
+<li>lazy   作用：当文本框失去焦点或按  enter  的时候，v-model 才会执行变量的更新.</li>
+</ul>
+<pre><code class="language-html">    &lt;!-- lazy修饰符 --&gt;
+    &lt;label for=&quot;active&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;active&quot; v-model.lazy=&quot;message&quot;&gt;
+    &lt;/label&gt;
+    &lt;h2&gt;{{message}}&lt;/h2&gt;
+</code></pre>
+<ul>
+<li>number 作用：把数据类型转换乘Number类型</li>
+</ul>
+<pre><code class="language-html">    &lt;!-- number修饰符 --&gt;
+    &lt;!-- 当type的类型为number类型的时候，v-model绑定的值自动变成String类型 --&gt;
+    &lt;input type=&quot;number&quot; v-model.number=&quot;age&quot;&gt;
+    &lt;h2&gt;{{age}}---{{typeof(age)}}&lt;/h2&gt;
+</code></pre>
+<ul>
+<li>trim  作用：消除字符串连边的空格</li>
+</ul>
+<pre><code class="language-html">    &lt;!-- 3、trim 修饰符 --&gt;
+    &lt;input type=&quot;text&quot; v-model=&quot;trim&quot;&gt;
+    &lt;h2&gt;{{trim}}&lt;/h2&gt;
+</code></pre>
+</div>
+                                    <div class="mdui-divider mdui-m-b-2"></div>
+                                    <div class="mdui-row-xs-2 post-fenye">
+                                       
+                                        <div class="mdui-col"> <div class="mdui-text-left"><a href="https://kilric.github.io/post/vue-cut">Vue购物车小案例</a></div></div>
+                                        
+
+                                        
+                                        <div class="mdui-col"><div class="mdui-text-right "><a href="https://kilric.github.io/post/mvvm">Vue的MVVM架构</a></div> </div>
+                                       
+                                      </div>
+                                   
+                                    <div class="mdui-divider mdui-m-t-2 mdui-m-b-2"></div>
+                                    
+                                     <script src="https://kilric.github.io/media/scripts/Valine.min.js"></script>
+ <div class="comment"></div>
+
+<script>
+      new Valine({
+            el: '.comment',
+
+
+
+            path: window.location.pathname,
+            pageSize: 30,
+            avatar:'mm', 
+       })
+    </script> 
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+                                </article>
+
+                                    
+                        </div>
+                      </div>
+    
+                
+
+              </div>
+                    <footer class="footer mdui-m-t-5 mdui-text-center">
+               <nav class="social-links">
+                      <ul>
+                      
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      
+                           
+                      </ul>
+                    </nav>
+                  <div class="copyright">
+                       <p>Powered by <a href="https://kilric.com" target="_blank">Kilric</a> <br/> <!-- Theme <a href="https://github.com/alterfang/gridea-theme-song/">宋</a> by <a href="https://shanbu.fun/">山卜方</a> </p> -->
+                  </div>
+                  
+              </footer>
+    </body>
+</html>
