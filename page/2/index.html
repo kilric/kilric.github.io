@@ -1,178 +1,320 @@
-<!DOCTYPE html>
 <html>
-        <head>
-        <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
-        <meta charset="utf-8">
-        <title>Kilric&#39;s  Blog</title>
-        <link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
-        <link rel="stylesheet" href="https://at.alicdn.com/t/font_1423691_1fcfxbwa79n.css">
-        <link href="https://cdn.bootcss.com/animate.css/3.7.2/animate.min.css" rel="stylesheet">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-        <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
-         <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
-         <script >hljs.initHighlightingOnLoad();</script>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kilric&#39;s  Blog</title>
+<link rel="shortcut icon" href="https://kilric.github.io/favicon.ico?v=1574088792589">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
 
-    </head>
-    <body>
-          <header class="header mdui-m-b-5">      
-            <div class="container  ">
-                <div class="index-title animated fadeInDown mdui-text-center mdui-text-color-white mdui-m-b-2" style="animation-delay: 0.2s"><a href="https://kilric.github.io">Kilric&#39;s  Blog</a></div>
-                <div class="mdui-text-color-white animated fadeInDown mdui-text-center  mdui-m-b-3" style="animation-delay: 0.4s">专注于IT互联网，包括但不限于C/C++,Golang,Java,Web技术,大数据与云计算。</div>
-           
-            <nav id="nav" class="mdui-text-center animated fadeInDown" style="animation-delay: 0.6s">
-                   
-                            <li><a href="/">首页</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/archives">归档</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/tags">标签</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                            <li><a href="/post/about">关于</a>
-                                <span class="nav-style top"></span>
-                                <span class="nav-style bottom"></span>
-                                <span class="nav-style left"></span>
-                                <span class="nav-style right"></span>
-                                </li>
-                    
-                  </nav>
-                </div>
-        </header>
-        <div class="mdui-container ">
-                <div class="mdui-row">
-                        <div class="mdui-col-md-8 mdui-col-offset-md-2 mdui-m-t-1">
-                         
-                                                         
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 20:03:40">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/redhat-yum">Redhat系软件包管理命令</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/redhat-yum">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 20:02:37">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/linux-base">必须掌握的Linux使用基础命令</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/linux-base">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 20:00:06">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/psql-basic">PostgreSQL基础</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/psql-basic">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 19:59:34">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/reflect">Java反射总结</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/reflect">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 19:58:19">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/annotation">Java注解总结</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/annotation">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 19:56:45">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/access-dir">目录访问的四种方式</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/access-dir">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 19:40:48">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/charset">字符集Charset</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/charset">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 19:39:33">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/mappedbuffer">内存映射文件</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/mappedbuffer">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 19:37:59">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/nio-web">Java-NIO  网络IO</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/nio-web">Read More</a></div>
-                                </article>
-                                
-                               <article class="mdui-p-a-5 index-list mdui-m-b-3 animated fadeIn" style="animation-delay: 0.8s;animation-duration: 2s">
-                                    <div class="mdui-typo-body-2 mdui-m-b-1" datetime="2019-11-12 19:29:49">2019-11-12</div>
-                                    <div class="mdui-typo-headline mdui-m-b-3 index-list-title index-guo"><a href="https://kilric.github.io/post/nio-buffer">Java-NIO缓冲区</a></div>
-                                    <div class="mdui-typo-subheading mdui-m-b-2 index-neirong"></div>
-                                    <div class="index-list-rm index-guo"><a href="https://kilric.github.io/post/nio-buffer">Read More</a></div>
-                                </article>
-                                
-                                                            <nav class="mdui-m-t-5">
-                                
-                                <div class="index-yema mdui-float-left"><a href="https://kilric.github.io/">上一页</a></div>
-                                 
-                                
-                                <div class="index-yema mdui-float-right"><a href="https://kilric.github.io/page/3/">下一页</a></div>
-                                 
-                                </nav>     
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
 
-                        </div>
-                      </div>
-              </div>
-                <footer class="footer mdui-m-t-5 mdui-text-center">
-               <nav class="social-links">
-                      <ul>
-                      
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      
-                           
-                      </ul>
-                    </nav>
-                  <div class="copyright">
-                       <p>Powered by <a href="https://kilric.com" target="_blank">Kilric</a> <br/> <!-- Theme <a href="https://github.com/alterfang/gridea-theme-song/">宋</a> by <a href="https://shanbu.fun/">山卜方</a> </p> -->
-                  </div>
-                  
-              </footer>
-    </body>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://kilric.github.io">
+  <img class="avatar" src="https://kilric.github.io/images/avatar.png?v=1574088792589" alt="">
+  </a>
+  <h1 class="site-title">
+    Kilric&#39;s  Blog
+  </h1>
+  <p class="site-description">
+    专注于IT互联网，包括但不限于C/C++,Golang,Java,Web技术,大数据与云计算。
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+    
+        <div class="post-container">
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/redhat-yum">
+        <h2 class="post-title">Redhat系软件包管理命令</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/1KymXc-MP" class="post-tag">
+            # Redhat
+          </a>
+        
+          <a href="https://kilric.github.io/tag/lwRYZTPao" class="post-tag">
+            # Linux
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/linux-base">
+        <h2 class="post-title">必须掌握的Linux使用基础命令</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/lwRYZTPao" class="post-tag">
+            # Linux
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/psql-basic">
+        <h2 class="post-title">PostgreSQL基础</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/postgresql" class="post-tag">
+            # PostgreSQL
+          </a>
+        
+      </div>
+      
+        <a href="https://kilric.github.io/post/psql-basic" class="post-feature-image" style="background-image: url('https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1573901266528&amp;di=5a2a9783a957bf53594f6c8e706a91f5&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.zhouxiaosong.com%2F2019%2F08%2F831631.png')">
+        </a>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/reflect">
+        <h2 class="post-title">Java反射总结</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/java" class="post-tag">
+            # java
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/annotation">
+        <h2 class="post-title">Java注解总结</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/java" class="post-tag">
+            # java
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/access-dir">
+        <h2 class="post-title">目录访问的四种方式</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/java" class="post-tag">
+            # java
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/charset">
+        <h2 class="post-title">字符集Charset</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/java" class="post-tag">
+            # java
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/mappedbuffer">
+        <h2 class="post-title">内存映射文件</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/java" class="post-tag">
+            # java
+          </a>
+        
+          <a href="https://kilric.github.io/tag/rEO1muESo" class="post-tag">
+            # nio
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/nio-web">
+        <h2 class="post-title">Java-NIO  网络IO</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/java" class="post-tag">
+            # java
+          </a>
+        
+          <a href="https://kilric.github.io/tag/rEO1muESo" class="post-tag">
+            # nio
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://kilric.github.io/post/nio-buffer">
+        <h2 class="post-title">Java-NIO缓冲区</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-11-12 ·
+        </time>
+        
+          <a href="https://kilric.github.io/tag/java" class="post-tag">
+            # java
+          </a>
+        
+          <a href="https://kilric.github.io/tag/rEO1muESo" class="post-tag">
+            # nio
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+</div>
+
+    
+        <div class="pagination-container">
+  
+    <a href="https://kilric.github.io/" class="prev-page">上一页</a>
+  
+  
+    <a href="https://kilric.github.io/page/3/" class="prev-page">下一页</a>
+  
+</div>
+
+    
+        <div class="site-footer">
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a> | 
+  <a class="rss" href="https://kilric.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
 </html>
