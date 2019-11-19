@@ -89,7 +89,7 @@
 </div>
       <div class="mb-20 md:flex mt-10 lg:mt-6 md:border-t md:border-gray-400 md:pt-2 lg:border-t-0 lg:pt-0">
         <div class="w-full md:w-2/3 mt-6">
-          <h1 class="text-4xl">在Windows下配置单机版hbase</h1>
+          <h1 class="text-4xl">在Windows和Linux下配置单机版hbase</h1>
           
           <div class="mt-6 lg:mt-10 post-content">
             <h1 id="1下载安装包分别是hadoop以及hbase">1.下载安装包，分别是hadoop以及hbase</h1>
@@ -98,6 +98,9 @@
 <h1 id="2配置hadoop环境">2.配置hadoop环境</h1>
 <p>在系统环境变量中增加HADOOP_HOME,并在path中增加%HADOOP_HOME%\bin</p>
 <h1 id="3配置hbase环境">3.配置hbase环境</h1>
+<ul>
+<li>Windows</li>
+</ul>
 <p>在hbase-1.2.0\conf下找到hbase-env.cmd</p>
 <p>配置以下属性：</p>
 <pre><code class="language-sh">set HBASE_MANAGES_ZK=false
@@ -112,18 +115,27 @@ set HBASE_CLASSPATH=D:hadoop\hbase-1.2.6\conf
 <p>HBASE_CLASSPATH配置自己的hbase中conf文件夹路径</p>
 </li>
 <li>
-<p>在hbase-1.2.6\conf中找到hbase-site.xml</p>
+<p>Linux</p>
 </li>
+</ul>
+<p>在/usr/local/hbase/conf下找到hbase-site.sh</p>
+<p>配置以下属性：</p>
+<pre><code class="language-sh">export HBASE_MANAGES_ZK=false
+export JAVA_HOME=/usr/local/jdk8
+set HBASE_CLASSPATH=/usr/local/hbase/conf
+</code></pre>
+<ul>
+<li>在hbase/conf中找到hbase-site.xml</li>
 </ul>
 <p>配置以下属性：</p>
 <pre><code class="language-xml">&lt;configuration&gt;
     &lt;property&gt;  
         &lt;name&gt;hbase.rootdir&lt;/name&gt;  
-        &lt;value&gt;file:///D:/hadoop/hbase-1.2.6/root&lt;/value&gt;  
+        &lt;value&gt;file:///usr/local/hbase/root&lt;/value&gt;  
     &lt;/property&gt;  
     &lt;property&gt;  
         &lt;name&gt;hbase.tmp.dir&lt;/name&gt;  
-        &lt;value&gt;D:/hadoop/hbase-1.2.6/tmp&lt;/value&gt;  
+        &lt;value&gt;/usr/local/hbase/tmp&lt;/value&gt;  
     &lt;/property&gt;  
     &lt;property&gt;  
         &lt;name&gt;hbase.zookeeper.quorum&lt;/name&gt;  
@@ -131,7 +143,7 @@ set HBASE_CLASSPATH=D:hadoop\hbase-1.2.6\conf
     &lt;/property&gt;  
     &lt;property&gt;  
         &lt;name&gt;hbase.zookeeper.property.dataDir&lt;/name&gt;  
-        &lt;value&gt;D:/hadoop/hbase-1.2.6/zoo&lt;/value&gt;  
+        &lt;value&gt;/usr/local/hbase/zoo&lt;/value&gt;  
     &lt;/property&gt;  
     &lt;property&gt;  
         &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;  
@@ -139,13 +151,23 @@ set HBASE_CLASSPATH=D:hadoop\hbase-1.2.6\conf
     &lt;/property&gt;  
 &lt;/configuration&gt;
 </code></pre>
-<p>同样，涉及到路径的都配置自己的hbase中的路径，其中没有的文件夹，会自己创建</p>
+<p>同样，涉及到路径的都配置自己的hbase中的路径，其中没有的文件夹，会自己创建.</p>
 <h1 id="4启动hbase">4.启动hbase</h1>
+<ul>
+<li>Windows</li>
+</ul>
 <p>进入到hbase-1.2.0\bin目录下，启动start-hbase.cmd，看到控制台无报错信息，并启动停止即可</p>
 <p>在cmd模式下，进入到hbase-1.2.0\bin目录下：</p>
 <p>输入命令：<code>hbase shell</code></p>
 <p>出现hbase（main）:001.0&gt;</p>
 <p>成功搭建好单机版的hbase环境</p>
+<ul>
+<li>Linux</li>
+</ul>
+<p>在/usr/local/hbase/bin下执行 <code>./start-hbase.sh</code>.</p>
+<p>然后继续在该目录下执行 <code>hbase shell</code>,</p>
+<p>出现hbase（main）:001.0&gt;</p>
+<p>成功搭建好单机版的hbase环境.</p>
 <h1 id="5创建表">5.创建表</h1>
 <p>输入 <code>create 'test-table','f1','f2','f3'</code></p>
 <p>正常的话会出现类似 0 row(s) in 1.3200 seconds 这样的结果.</p>
