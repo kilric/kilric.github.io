@@ -121,7 +121,8 @@ set HBASE_CLASSPATH=/usr/local/hbase/conf
 <ul>
 <li>在hbase/conf中找到hbase-site.xml</li>
 </ul>
-<p>配置以下属性：</p>
+<h2 id="配置以下属性">配置以下属性：</h2>
+<h2 id="linux">Linux</h2>
 <pre><code class="language-xml">&lt;configuration&gt;
     &lt;property&gt;  
         &lt;name&gt;hbase.rootdir&lt;/name&gt;  
@@ -144,6 +145,31 @@ set HBASE_CLASSPATH=/usr/local/hbase/conf
         &lt;value&gt;false&lt;/value&gt;  
     &lt;/property&gt;  
 &lt;/configuration&gt;
+</code></pre>
+<hr>
+<h2 id="windows">Windows</h2>
+<pre><code class="language-xml">&lt;configuration&gt;
+ &lt;property&gt;
+ &lt;name&gt;hbase.rootdir&lt;/name&gt;
+ &lt;value&gt;file:///D:/hadoop/hbase-1.2.6/root&lt;/value&gt;
+ &lt;/property&gt;
+ &lt;property&gt;
+ &lt;name&gt;hbase.tmp.dir&lt;/name&gt;
+ &lt;value&gt;D:/hadoop/hbase-1.2.6/tmp&lt;/value&gt;
+ &lt;/property&gt;
+ &lt;property&gt;
+ &lt;name&gt;hbase.zookeeper.quorum&lt;/name&gt;
+ &lt;value&gt;127.0.0.1&lt;/value&gt;
+ &lt;/property&gt;
+ &lt;property&gt;
+ &lt;name&gt;hbase.zookeeper.property.dataDir&lt;/name&gt;
+ &lt;value&gt;D:/hadoop/hbase-1.2.6/zoo&lt;/value&gt;
+ &lt;/property&gt;
+ &lt;property&gt;
+ &lt;name&gt;hbase.cluster.distributed&lt;/name&gt;
+ &lt;value&gt;false&lt;/value&gt;
+ &lt;/property&gt;
+ &lt;/configuration&gt;
 </code></pre>
 <p>同样，涉及到路径的都配置自己的hbase中的路径，其中没有的文件夹，会自己创建.</p>
 <h1 id="4启动hbase">4.启动hbase</h1>
@@ -185,7 +211,7 @@ set HBASE_CLASSPATH=/usr/local/hbase/conf
                 
               </div>
               <h4 class="text-base font-thin text-gray-700 mb-2">阅读时间</h4>
-              <div class="text-lg mb-6">3 min read</div>
+              <div class="text-lg mb-6">4 min read</div>
               <h4 class="text-base font-thin text-gray-700 mb-2">相关阅读</h4>
               <div class="border-b border-gray-400">
                 
