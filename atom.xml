@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kilric.github.io</id>
     <title>Kilric&apos;s  Blog</title>
-    <updated>2019-11-19T12:03:38.860Z</updated>
+    <updated>2019-11-21T14:29:07.757Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kilric.github.io"/>
     <link rel="self" href="https://kilric.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://kilric.github.io/images/avatar.png</logo>
     <icon>https://kilric.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Kilric&apos;s  Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[CSS flex布局]]></title>
+        <id>https://kilric.github.io/post/css-flex</id>
+        <link href="https://kilric.github.io/post/css-flex">
+        </link>
+        <updated>2019-11-21T13:14:53.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[在Windows和Linux下配置单机版hbase]]></title>
         <id>https://kilric.github.io/post/win-hbase</id>
@@ -72,12 +79,5 @@
         <link href="https://kilric.github.io/post/classloader">
         </link>
         <updated>2019-11-12T12:07:53.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[用户和用户组管理]]></title>
-        <id>https://kilric.github.io/post/linux-ug</id>
-        <link href="https://kilric.github.io/post/linux-ug">
-        </link>
-        <updated>2019-11-12T12:05:07.000Z</updated>
     </entry>
 </feed>
