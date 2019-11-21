@@ -1,15 +1,18 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
+    
+<meta charset="utf-8" >
 
 <title>JDBC-数据库连接池和DBUtils的使用 | Kilric&#39;s  Blog</title>
 <meta name="description" content="专注于IT互联网，包括但不限于C/C++,Golang,Java,Web技术,大数据与云计算。">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://kilric.github.io/favicon.ico?v=1574346544371">
+<link rel="shortcut icon" href="https://kilric.github.io/favicon.ico?v=1574347389794">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
 
@@ -18,85 +21,89 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
 
 
   </head>
   <body>
     <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://kilric.github.io">
-        <img src="https://kilric.github.io/images/avatar.png?v=1574346544371" class="site-logo">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://kilric.github.io">
+        <img class="avatar" src="https://kilric.github.io/images/avatar.png?v=1574347389794" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://kilric.github.io">
         <h1 class="site-title">Kilric&#39;s  Blog</h1>
       </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
     </div>
-    <div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
       
         
-          <a href="/" class="site-nav">
+          <a href="/" class="menu purple-link">
             首页
           </a>
         
       
         
-          <a href="/archives" class="site-nav">
+          <a href="/archives" class="menu purple-link">
             归档
           </a>
         
       
         
-          <a href="/tags" class="site-nav">
+          <a href="/tags" class="menu purple-link">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="site-nav">
+          <a href="/post/about" class="menu purple-link">
             关于
           </a>
         
       
     </div>
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      专注于IT互联网，包括但不限于C/C++,Golang,Java,Web技术,大数据与云计算。
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://kilric.com" target="_blank">Kilric</a> | <a class="rss" href="https://kilric.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
+</transition>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">JDBC-数据库连接池和DBUtils的使用</h2>
-            <div class="post-date">2019-11-12</div>
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">JDBC-数据库连接池和DBUtils的使用</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-11-12</span>
             
-            <div class="post-content">
-              <h1 id="1-数据库连接池">1. 数据库连接池</h1>
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://kilric.github.io/tag/jdbc">
+                    jdbc
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://kilric.github.io/tag/java">
+                    java
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <h1 id="1-数据库连接池">1. 数据库连接池</h1>
 <h2 id="11-数据库连接池技术">1.1. 数据库连接池技术</h2>
 <ul>
 <li>为解决传统开发中的数据库连接问题，可以采用数据库连接池技术。</li>
@@ -110,14 +117,25 @@
 <h2 id="12-多种实现">1.2. 多种实现</h2>
 <p>JDBC 的数据库连接池使用 javax.sql.DataSource 来表示，DataSource 只是一个接口，该接口通常由服务器(Weblogic, WebSphere, Tomcat)提供实现，也有一些开源组织提供实现：</p>
 <ul>
-<li>DBCP 是Apache提供的数据库连接池。tomcat 服务器自带dbcp数据库连接池。速度相对c3p0较快，但因自身存在BUG，Hibernate3已不再提供支持。</li>
-<li>C3P0 是一个开源组织提供的一个数据库连接池，**速度相对较慢，稳定性还可以。**hibernate官方推荐使用</li>
-<li>Proxool 是sourceforge下的一个开源项目数据库连接池，有监控连接池状态的功能，稳定性较c3p0差一点</li>
-<li>BoneCP 是一个开源组织提供的数据库连接池，速度快</li>
-<li>Druid 是阿里提供的数据库连接池，据说是集DBCP 、C3P0 、Proxool 优点于一身的数据库连接池，但是速度不确定是否有BoneCP快。<br>
+<li>
+<p>DBCP 是Apache提供的数据库连接池。tomcat 服务器自带dbcp数据库连接池。速度相对c3p0较快，但因自身存在BUG，Hibernate3已不再提供支持。</p>
+</li>
+<li>
+<p>C3P0 是一个开源组织提供的一个数据库连接池，**速度相对较慢，稳定性还可以。**hibernate官方推荐使用</p>
+</li>
+<li>
+<p>Proxool 是sourceforge下的一个开源项目数据库连接池，有监控连接池状态的功能，稳定性较c3p0差一点</p>
+</li>
+<li>
+<p>BoneCP 是一个开源组织提供的数据库连接池，速度快</p>
+</li>
+<li>
+<p>Druid 是阿里提供的数据库连接池，据说是集DBCP 、C3P0 、Proxool 优点于一身的数据库连接池，但是速度不确定是否有BoneCP快。<br>
 DataSource 通常被称为数据源，它包含连接池和连接池管理两个部分，习惯上也经常把 DataSource 称为连接池<br>
-DataSource用来取代DriverManager来获取Connection，获取速度快，同时可以大幅度提高数据库访问速度。</li>
-<li>特别注意：
+DataSource用来取代DriverManager来获取Connection，获取速度快，同时可以大幅度提高数据库访问速度。</p>
+</li>
+<li>
+<p>特别注意：</p>
 <ul>
 <li>数据源和数据库连接不同，数据源无需创建多个，它是产生数据库连接的工厂，因此整个应用只需要一个数据源即可。</li>
 <li>当数据库访问结束后，程序还是像以前一样关闭数据库连接：conn.close(); 但conn.close()并没有关闭数据库的物理连接，它仅仅把数据库连接释放，归还给了数据库连接池。</li>
@@ -149,7 +167,6 @@ username=root
 password=jia1895247349
 # 5. 驱动名称
 driverClassName=com.mysql.jdbc.Driver
-
 # 6. 初始化的连接个数
 initialSize=10
 # 7. 最大连接个数
@@ -167,14 +184,38 @@ filters=wall
 </blockquote>
 <p>主要方法如下：</p>
 <ul>
-<li>public static void close(…) throws java.sql.SQLException：　DbUtils类提供了三个重载的关闭方法。这些方法检查所提供的参数是不是NULL，如果不是的话，它们就关闭Connection、Statement和ResultSet。</li>
-<li>public static void closeQuietly(…): 这一类方法不仅能在Connection、Statement和ResultSet为NULL情况下避免关闭，还能隐藏一些在程序中抛出的SQLEeception。</li>
-<li>public static void commitAndClose(Connection conn)throws SQLException： 用来提交连接的事务，然后关闭连接</li>
-<li>public static void commitAndCloseQuietly(Connection conn)： 用来提交连接，然后关闭连接，并且在关闭连接时不抛出SQL异常。</li>
-<li>public static void rollback(Connection conn)throws SQLException：允许conn为null，因为方法内部做了判断</li>
-<li>public static void rollbackAndClose(Connection conn)throws SQLException</li>
-<li>public tstaic void rollbackAndCloseQuietly(Connection)</li>
-<li>public static boolean loadDriver(java.lang.String driverClassName)：这一方装载并注册JDBC驱动程序，如果成功就返回true。使用该方法，你不需要捕捉这个异常ClassNotFoundException。</li>
+<li>
+<p>public static void close(…) throws java.sql.SQLException：</p>
+<p>DbUtils类提供了三个重载的关闭方法。这些方法检查所提供的参数是不是NULL，如果不是的话，它们就关闭Connection、Statement和ResultSet。</p>
+</li>
+<li>
+<p>public static void closeQuietly(…):</p>
+</li>
+</ul>
+<p>这一类方法不仅能在Connection、Statement和ResultSet为NULL情况下避免关闭，还能隐藏一些在程序中抛出的SQLEeception。</p>
+<ul>
+<li>public static void commitAndClose(Connection conn)throws SQLException：</li>
+</ul>
+<p>用来提交连接的事务，然后关闭连接.</p>
+<ul>
+<li>
+<p>public static void commitAndCloseQuietly(Connection conn)：</p>
+<p>用来提交连接，然后关闭连接，并且在关闭连接时不抛出SQL异常。</p>
+</li>
+<li>
+<p>public static void rollback(Connection conn)throws SQLException：</p>
+<p>允许conn为null，因为方法内部做了判断</p>
+</li>
+<li>
+<p>public static void rollbackAndClose(Connection conn)throws SQLException</p>
+</li>
+<li>
+<p>public tstaic void rollbackAndCloseQuietly(Connection)</p>
+</li>
+<li>
+<p>public static boolean loadDriver(java.lang.String driverClassName)：</p>
+<p>这一方装载并注册JDBC驱动程序，如果成功就返回true。使用该方法，你不需要捕捉这个异常ClassNotFoundException。</p>
+</li>
 </ul>
 <h2 id="22-queryrunner类">2.2. QueryRunner类</h2>
 <p><strong>该类简单化了SQL查询，它与ResultSetHandler组合在一起使用可以完成大部分的数据库操作，能够大大减少编码量。</strong></p>
@@ -185,21 +226,31 @@ filters=wall
 需要一个 javax.sql.DataSource 来作参数的构造器</li>
 </ul>
 </li>
-<li>QueryRunner类的主要方法：
+<li>QueryRunner类的主要方法：</li>
+</ul>
 <ul>
 <li>更新<br>
-<code>public int update(Connection conn, String sql, Object... params) throws SQLException</code>:用来执行一个更新（插入、更新或删除）操作。</li>
+<code>public int update(Connection conn, String sql, Object... params) throws SQLException</code>:</li>
+</ul>
+<p>用来执行一个更新（插入、更新或删除）操作。</p>
+<ul>
 <li>插入<br>
-<code>public T insert(Connection conn,String sql,ResultSetHandler rsh, Object... params) throws SQLException</code>：只支持INSERT语句，其中 rsh - The handler used to create the result object from the ResultSet of auto-generated keys. 返回值: An object generated by the handler.即自动生成的键值</li>
+<code>public T insert(Connection conn,String sql,ResultSetHandler rsh, Object... params) throws SQLException</code>：</li>
+</ul>
+<p>只支持INSERT语句，其中 rsh - The handler used to create the result object from the ResultSet of auto-generated keys. 返回值: An object generated by the handler.即自动生成的键值.</p>
+<ul>
 <li>批处理<br>
-<code>public int[] batch(Connection conn,String sql,Object[][] params)throws SQLException</code>： INSERT, UPDATE, or DELETE语句<br>
-<code>public T insertBatch(Connection conn,String sql,ResultSetHandler rsh,Object[][] params)throws SQLException</code>：只支持INSERT语句</li>
+<code>public int[] batch(Connection conn,String sql,Object[][] params)throws SQLException</code>：</li>
+</ul>
+<p>INSERT, UPDATE, or DELETE语句</p>
+<p><code>public T insertBatch(Connection conn,String sql,ResultSetHandler rsh,Object[][] params)throws SQLException</code>：</p>
+<p>只支持INSERT语句</p>
+<ul>
 <li>查询<br>
-<code>public Object query(Connection conn, String sql, ResultSetHandler rsh,Object... params) throws SQLException</code>：执行一个查询操作，在这个查询中，对象数组中的每个元素值被用来作为查询语句的置换参数。该方法会自行处理 PreparedStatement 和 ResultSet 的创建和关闭。<br>
-......</li>
+<code>public Object query(Connection conn, String sql, ResultSetHandler rsh,Object... params) throws SQLException</code>：</li>
 </ul>
-</li>
-</ul>
+<p>执行一个查询操作，在这个查询中，对象数组中的每个元素值被用来作为查询语句的置换参数。该方法会自行处理 PreparedStatement 和 ResultSet 的创建和关闭。</p>
+<p>......</p>
 <h2 id="23-resultsethandler接口及实现类">2.3. ResultSetHandler接口及实现类</h2>
 <p>该接口用于处理 java.sql.ResultSet，将数据按要求转换为另一种形式。</p>
 <ul>
@@ -210,15 +261,15 @@ filters=wall
 <p>接口的主要实现类：</p>
 </li>
 </ul>
-<p>ArrayHandler：把结果集中的第一行数据转成对象数组。<br>
-ArrayListHandler：把结果集中的每一行数据都转成一个数组，再存放到List中。<br>
-**BeanHandler：**将结果集中的第一行数据封装到一个对应的JavaBean实例中。<br>
-**BeanListHandler：**将结果集中的每一行数据都封装到一个对应的JavaBean实例中，存放到List里。<br>
-ColumnListHandler：将结果集中某一列的数据存放到List中。<br>
-KeyedHandler(name)：将结果集中的每一行数据都封装到一个Map里，再把这些map再存到一个map里，其key为指定的key。<br>
-**MapHandler：**将结果集中的第一行数据封装到一个Map里，key是列名，value就是对应的值。<br>
-**MapListHandler：**将结果集中的每一行数据都封装到一个Map里，然后再存放到List<br>
-**ScalarHandler：**查询单个值对象</p>
+<p>ArrayHandler：把结果集中的第一行数据转成对象数组。</p>
+<p>ArrayListHandler：把结果集中的每一行数据都转成一个数组，再存放到List中。</p>
+<p>**BeanHandler：**将结果集中的第一行数据封装到一个对应的JavaBean实例中。</p>
+<p>**BeanListHandler：**将结果集中的每一行数据都封装到一个对应的JavaBean实例中，存放到List里。</p>
+<p>ColumnListHandler：将结果集中某一列的数据存放到List中。</p>
+<p>KeyedHandler(name)：将结果集中的每一行数据都封装到一个Map里，再把这些map再存到一个map里，其key为指定的key。</p>
+<p>**MapHandler：**将结果集中的第一行数据封装到一个Map里，key是列名，value就是对应的值。</p>
+<p>**MapListHandler：**将结果集中的每一行数据都封装到一个Map里，然后再存放到List</p>
+<p>**ScalarHandler：**查询单个值对象</p>
 <pre><code class="language-java">public class TestDBUtils {
 	private Connection getConnection() throws Exception {
 		Properties properties = new Properties ();
@@ -278,44 +329,43 @@ KeyedHandler(name)：将结果集中的每一行数据都封装到一个Map里�
 }
 </code></pre>
 
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://kilric.github.io/tag/jdbc" class="tag">
-                    jdbc
-                  </a>
-                
-                  <a href="https://kilric.github.io/tag/java" class="tag">
-                    java
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://kilric.github.io/post/jdbc-dao">
-                  <h3 class="post-title">
-                    JDBC-Dao模块化思想
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-
           </div>
-
         </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://kilric.github.io/post/jdbc-dao">
+              <h3 class="post-title">
+                下一篇：JDBC-Dao模块化思想
+              </h3>
+            </a>
+          </div>
+          
       </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">专注于IT互联网，包括但不限于C/C++,Golang,Java,Web技术,大数据与云计算。</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a> | <a class="rss" href="https://kilric.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
     </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-<script type="application/javascript">
-
-AOS.init();
+    <script type="application/javascript">
 
 hljs.initHighlightingOnLoad()
 
