@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://kilric.github.io/favicon.ico?v=1574827048420">
+<link rel="shortcut icon" href="https://kilric.github.io/favicon.ico?v=1584326091938">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://kilric.github.io/styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="site-header">
     <div class="left">
       <a href="https://kilric.github.io">
-        <img class="avatar" src="https://kilric.github.io/images/avatar.png?v=1574827048420" alt="" width="32px" height="32px">
+        <img class="avatar" src="https://kilric.github.io/images/avatar.png?v=1584326091938" alt="" width="32px" height="32px">
       </a>
       <a href="https://kilric.github.io">
         <h1 class="site-title">Kilric&#39;s  Blog</h1>
@@ -125,7 +125,7 @@
 <p>一般在实际过程中，我们一般是先将文件读入内存，再从内存写出到别的地方,这样在输入输出过程中我们都可以用缓存来提升IO性能。</p>
 <p>所以，buffer在IO中很重要。在旧I/O类库中（相对java.nio包）中的BufferedInputStream、BufferedOutputStream、BufferedReader和BufferedWriter在其实现中都运用了缓冲区。java.nio包公开了Buffer API，使得Java程序可以直接控制和运用缓冲区。</p>
 <p>在Java NIO中，<strong>缓冲区的作用也是用来临时存储数据</strong>，可以理解为是I/O操作中数据的中转站。缓冲区直接为通道(Channel)服务，写入数据到通道或从通道读取数据，这样的操利用缓冲区数据来传递就可以达到对数据高效处理的目的。在NIO中主要有八种缓冲区类(其中MappedByteBuffer是专门用于内存映射的一种ByteBuffer).</p>
-<figure data-type="image" tabindex="1"><img src="https://kilric.github.io/post-images/1573558507010.png" alt=""></figure>
+<figure data-type="image" tabindex="1"><img src="https://kilric.github.io/post-images/1573558507010.png" alt="" loading="lazy"></figure>
 <h2 id="11-字段">1.1. 字段</h2>
 <p>所有缓冲区都有4个属性：capacity、limit、position、mark，并遵循：mark &lt;= position &lt;= limit &lt;= capacity，下表格是对着4个属性的解释：</p>
 <table>
@@ -391,7 +391,8 @@
       
     
   </div>
-  Powered by <a href="https://kilric.com" target="_blank">Kilric</a> | <a class="rss" href="https://kilric.github.io/atom.xml" target="_blank">RSS</a>
+  Powered by <a href="https://kilric.com" target="_blank">Kilric</a><br>
+<a href="http://www.beian.miit.gov.cn/">陕ICP备18001894号</a><br> | <a class="rss" href="https://kilric.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
 
